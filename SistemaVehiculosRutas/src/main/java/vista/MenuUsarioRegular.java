@@ -26,8 +26,13 @@ public class MenuUsarioRegular extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        filtroBGroup = new javax.swing.ButtonGroup();
+        tipoVehiculoBGroup = new javax.swing.ButtonGroup();
+        jSeparator1 = new javax.swing.JSeparator();
         jTabbedPane4 = new javax.swing.JTabbedPane();
         rutasPanel = new javax.swing.JPanel();
+        tablaRutasScrollPane = new javax.swing.JScrollPane();
+        tablaRutas = new javax.swing.JTable();
         origenLabel = new javax.swing.JLabel();
         origenCBox = new javax.swing.JComboBox<>();
         destinoLabel = new javax.swing.JLabel();
@@ -36,21 +41,34 @@ public class MenuUsarioRegular extends javax.swing.JFrame {
         porVehiculoRButton = new javax.swing.JRadioButton();
         porTipoRButton = new javax.swing.JRadioButton();
         filtrarCBox = new javax.swing.JComboBox<>();
-        tablaScrollPane1 = new javax.swing.JScrollPane();
-        tabla = new javax.swing.JTable();
         vehiculosPanel = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tablaVehiculosScrollPane = new javax.swing.JScrollPane();
+        tablaVehiculos = new javax.swing.JTable();
         nombreLabel = new javax.swing.JLabel();
         nombreTField = new javax.swing.JTextField();
         tipoVehiculoLabel = new javax.swing.JLabel();
         electricoRButton = new javax.swing.JRadioButton();
         combustibleRButton = new javax.swing.JRadioButton();
-        tipoCombustibleLabel = new javax.swing.JLabel();
-        tipoCombustibleCBox = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        tipoCombustibleCbox = new javax.swing.JComboBox<>();
+        agregarButton = new javax.swing.JButton();
+        eliminarButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menú");
+
+        tablaRutas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tablaRutasScrollPane.setViewportView(tablaRutas);
 
         origenLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         origenLabel.setText("Orígen:");
@@ -67,47 +85,36 @@ public class MenuUsarioRegular extends javax.swing.JFrame {
         filtrarLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         filtrarLabel.setText("Filtrar:");
 
+        filtroBGroup.add(porVehiculoRButton);
         porVehiculoRButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        porVehiculoRButton.setSelected(true);
         porVehiculoRButton.setText("Por vehículo");
 
+        filtroBGroup.add(porTipoRButton);
         porTipoRButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         porTipoRButton.setText("Por tipo");
 
         filtrarCBox.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         filtrarCBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        tabla.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        tablaScrollPane1.setViewportView(tabla);
-
         javax.swing.GroupLayout rutasPanelLayout = new javax.swing.GroupLayout(rutasPanel);
         rutasPanel.setLayout(rutasPanelLayout);
         rutasPanelLayout.setHorizontalGroup(
             rutasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(rutasPanelLayout.createSequentialGroup()
-                .addGap(51, 51, 51)
+                .addGap(40, 40, 40)
                 .addGroup(rutasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(filtrarCBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(rutasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(filtrarLabel)
-                        .addGroup(rutasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(origenLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(destinoLabel)))
-                    .addComponent(origenCBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(destinoCBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(destinoLabel)
+                    .addGroup(rutasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(origenCBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(destinoCBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(filtrarCBox, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(origenLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(filtrarLabel)
                     .addComponent(porVehiculoRButton)
                     .addComponent(porTipoRButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
-                .addComponent(tablaScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
+                .addComponent(tablaRutasScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37))
         );
         rutasPanelLayout.setVerticalGroup(
@@ -133,24 +140,29 @@ public class MenuUsarioRegular extends javax.swing.JFrame {
                         .addComponent(filtrarCBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(rutasPanelLayout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(tablaScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(tablaRutasScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
         jTabbedPane4.addTab("Rutas", rutasPanel);
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tablaVehiculos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {"Vehiculo1", "Tipo1",  new Boolean(false)}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Vehículos", "Tipo", "Favorito"
             }
-        ));
-        jScrollPane2.setViewportView(jTable2);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        tablaVehiculosScrollPane.setViewportView(tablaVehiculos);
 
         nombreLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         nombreLabel.setText("Nombre:");
@@ -158,14 +170,26 @@ public class MenuUsarioRegular extends javax.swing.JFrame {
         tipoVehiculoLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tipoVehiculoLabel.setText("Tipo de vehículo:");
 
+        tipoVehiculoBGroup.add(electricoRButton);
+        electricoRButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         electricoRButton.setText("Eléctrico");
 
+        tipoVehiculoBGroup.add(combustibleRButton);
+        combustibleRButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        combustibleRButton.setSelected(true);
         combustibleRButton.setText("Combustible");
 
-        tipoCombustibleLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        tipoCombustibleLabel.setText("Tipo de combustible:");
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel1.setText("Tipo de combustible:");
 
-        tipoCombustibleCBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        tipoCombustibleCbox.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tipoCombustibleCbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        agregarButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        agregarButton.setText("Agregar");
+
+        eliminarButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        eliminarButton.setText("Eliminar");
 
         javax.swing.GroupLayout vehiculosPanelLayout = new javax.swing.GroupLayout(vehiculosPanel);
         vehiculosPanel.setLayout(vehiculosPanelLayout);
@@ -173,46 +197,55 @@ public class MenuUsarioRegular extends javax.swing.JFrame {
             vehiculosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(vehiculosPanelLayout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(98, 98, 98)
+                .addComponent(tablaVehiculosScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
                 .addGroup(vehiculosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(vehiculosPanelLayout.createSequentialGroup()
-                        .addComponent(electricoRButton, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, vehiculosPanelLayout.createSequentialGroup()
+                        .addComponent(electricoRButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(combustibleRButton, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(95, Short.MAX_VALUE))
+                        .addComponent(combustibleRButton)
+                        .addGap(67, 67, 67))
                     .addGroup(vehiculosPanelLayout.createSequentialGroup()
                         .addGroup(vehiculosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(nombreTField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(nombreLabel)
-                            .addComponent(nombreTField, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tipoVehiculoLabel)
-                            .addComponent(tipoCombustibleLabel)
-                            .addComponent(tipoCombustibleCBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addComponent(jLabel1)
+                            .addComponent(tipoCombustibleCbox, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(vehiculosPanelLayout.createSequentialGroup()
+                                .addComponent(agregarButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(eliminarButton)))
+                        .addContainerGap())))
         );
         vehiculosPanelLayout.setVerticalGroup(
             vehiculosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(vehiculosPanelLayout.createSequentialGroup()
-                .addGroup(vehiculosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(vehiculosPanelLayout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(vehiculosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(vehiculosPanelLayout.createSequentialGroup()
                         .addGap(48, 48, 48)
                         .addComponent(nombreLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(nombreTField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(tipoVehiculoLabel)
-                        .addGap(18, 18, 18)
-                        .addGroup(vehiculosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(electricoRButton)
-                            .addComponent(combustibleRButton))
-                        .addGap(31, 31, 31)
-                        .addComponent(tipoCombustibleLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(vehiculosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(combustibleRButton, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(electricoRButton, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tipoCombustibleCBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(15, Short.MAX_VALUE))
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tipoCombustibleCbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addGroup(vehiculosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(agregarButton)
+                            .addComponent(eliminarButton))
+                        .addGap(163, 163, 163))
+                    .addGroup(vehiculosPanelLayout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(tablaVehiculosScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane4.addTab("Vehículos", vehiculosPanel);
@@ -225,7 +258,7 @@ public class MenuUsarioRegular extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane4)
+            .addComponent(jTabbedPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
         );
 
         pack();
@@ -270,15 +303,18 @@ public class MenuUsarioRegular extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton agregarButton;
     private javax.swing.JRadioButton combustibleRButton;
     private javax.swing.JComboBox<String> destinoCBox;
     private javax.swing.JLabel destinoLabel;
     private javax.swing.JRadioButton electricoRButton;
+    private javax.swing.JButton eliminarButton;
     private javax.swing.JComboBox<String> filtrarCBox;
     private javax.swing.JLabel filtrarLabel;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.ButtonGroup filtroBGroup;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane4;
-    private javax.swing.JTable jTable2;
     private javax.swing.JLabel nombreLabel;
     private javax.swing.JTextField nombreTField;
     private javax.swing.JComboBox<String> origenCBox;
@@ -286,10 +322,12 @@ public class MenuUsarioRegular extends javax.swing.JFrame {
     private javax.swing.JRadioButton porTipoRButton;
     private javax.swing.JRadioButton porVehiculoRButton;
     private javax.swing.JPanel rutasPanel;
-    private javax.swing.JTable tabla;
-    private javax.swing.JScrollPane tablaScrollPane1;
-    private javax.swing.JComboBox<String> tipoCombustibleCBox;
-    private javax.swing.JLabel tipoCombustibleLabel;
+    private javax.swing.JTable tablaRutas;
+    private javax.swing.JScrollPane tablaRutasScrollPane;
+    private javax.swing.JTable tablaVehiculos;
+    private javax.swing.JScrollPane tablaVehiculosScrollPane;
+    private javax.swing.JComboBox<String> tipoCombustibleCbox;
+    private javax.swing.ButtonGroup tipoVehiculoBGroup;
     private javax.swing.JLabel tipoVehiculoLabel;
     private javax.swing.JPanel vehiculosPanel;
     // End of variables declaration//GEN-END:variables
