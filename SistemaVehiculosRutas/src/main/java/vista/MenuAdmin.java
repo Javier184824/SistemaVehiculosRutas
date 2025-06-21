@@ -29,7 +29,7 @@ public class MenuAdmin extends javax.swing.JFrame {
         tabs = new javax.swing.JTabbedPane();
         usuariosPanel = new javax.swing.JPanel();
         listaUsuariosScrollPane = new javax.swing.JScrollPane();
-        listaUsuariosTabla = new javax.swing.JTable();
+        listaUsuariosTable = new javax.swing.JTable();
         nombreUsuarioLabel = new javax.swing.JLabel();
         nombreUsuarioTField = new javax.swing.JTextField();
         correoLabel = new javax.swing.JLabel();
@@ -39,18 +39,42 @@ public class MenuAdmin extends javax.swing.JFrame {
         editarButton = new javax.swing.JButton();
         cargarArchivoButton = new javax.swing.JButton();
         mapaPanel = new javax.swing.JPanel();
+        matrizLabel = new javax.swing.JLabel();
         nombreCiudadLabel = new javax.swing.JLabel();
         nombreCiudadTField = new javax.swing.JTextField();
         estacionCiudadButton = new javax.swing.JButton();
         agregarCiudadButton = new javax.swing.JButton();
         eliminarCiudadButton = new javax.swing.JButton();
         editarConexionesLabel = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        origenCBox = new javax.swing.JComboBox<>();
+        destinoCBox = new javax.swing.JComboBox<>();
+        minutosSpinner = new javax.swing.JSpinner();
+        kilometrosSpinner = new javax.swing.JSpinner();
+        costoSpinner = new javax.swing.JSpinner();
+        agregarConexionButton = new javax.swing.JButton();
+        eliminarConexionButton = new javax.swing.JButton();
+        verMapaButton = new javax.swing.JButton();
+        cargarArchivoMapaButton = new javax.swing.JButton();
         estacionesPanel = new javax.swing.JPanel();
+        listaEstacionesScrollPane = new javax.swing.JScrollPane();
+        listaEstacionesTable = new javax.swing.JTable();
+        nombreEstacionLabel = new javax.swing.JLabel();
+        nombreEstacionTField = new javax.swing.JTextField();
+        combustibleLabel = new javax.swing.JLabel();
+        regularRButton = new javax.swing.JRadioButton();
+        plusRButton = new javax.swing.JRadioButton();
+        dieselRButton = new javax.swing.JRadioButton();
+        gasLPRButton = new javax.swing.JRadioButton();
+        tiposCargadorLabel = new javax.swing.JLabel();
+        seleccionarCargadorButton = new javax.swing.JButton();
+        agregarEstacionButton = new javax.swing.JButton();
+        eliminarEstacionButton = new javax.swing.JButton();
+        editarCargadoresButton = new javax.swing.JButton();
+        cargarArchivoEstacionesButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        listaUsuariosTabla.setModel(new javax.swing.table.DefaultTableModel(
+        listaUsuariosTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null},
                 {null},
@@ -61,7 +85,7 @@ public class MenuAdmin extends javax.swing.JFrame {
                 "Lista de usuarios"
             }
         ));
-        listaUsuariosScrollPane.setViewportView(listaUsuariosTabla);
+        listaUsuariosScrollPane.setViewportView(listaUsuariosTable);
 
         nombreUsuarioLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         nombreUsuarioLabel.setText("Nombre de usuario:");
@@ -89,31 +113,30 @@ public class MenuAdmin extends javax.swing.JFrame {
         usuariosPanelLayout.setHorizontalGroup(
             usuariosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(usuariosPanelLayout.createSequentialGroup()
+                .addGap(47, 47, 47)
+                .addComponent(listaUsuariosScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
                 .addGroup(usuariosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(usuariosPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(listaUsuariosScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(53, 53, 53)
-                        .addGroup(usuariosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(usuariosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(nombreUsuarioLabel)
-                                .addComponent(nombreUsuarioTField, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                                .addComponent(correoLabel)
-                                .addComponent(correoTField))
-                            .addComponent(eliminarUsuarioButton)
-                            .addComponent(editarButton)
-                            .addComponent(agregarUsuarioButton)))
-                    .addGroup(usuariosPanelLayout.createSequentialGroup()
-                        .addGap(135, 135, 135)
-                        .addComponent(cargarArchivoButton)))
-                .addContainerGap(81, Short.MAX_VALUE))
+                    .addGroup(usuariosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(nombreUsuarioLabel)
+                        .addComponent(nombreUsuarioTField)
+                        .addComponent(correoLabel)
+                        .addComponent(correoTField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(eliminarUsuarioButton)
+                    .addComponent(editarButton)
+                    .addComponent(agregarUsuarioButton))
+                .addGap(114, 114, 114))
+            .addGroup(usuariosPanelLayout.createSequentialGroup()
+                .addGap(170, 170, 170)
+                .addComponent(cargarArchivoButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         usuariosPanelLayout.setVerticalGroup(
             usuariosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(usuariosPanelLayout.createSequentialGroup()
+                .addGap(41, 41, 41)
                 .addGroup(usuariosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(usuariosPanelLayout.createSequentialGroup()
-                        .addGap(32, 32, 32)
                         .addComponent(nombreUsuarioLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(nombreUsuarioTField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -127,15 +150,16 @@ public class MenuAdmin extends javax.swing.JFrame {
                         .addComponent(editarButton)
                         .addGap(18, 18, 18)
                         .addComponent(eliminarUsuarioButton))
-                    .addGroup(usuariosPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(listaUsuariosScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
+                    .addComponent(listaUsuariosScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(44, 44, 44)
                 .addComponent(cargarArchivoButton)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
 
         tabs.addTab("Usuarios", usuariosPanel);
+
+        matrizLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        matrizLabel.setText("Matriz");
 
         nombreCiudadLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         nombreCiudadLabel.setText("Nombre de ciudad:");
@@ -154,31 +178,79 @@ public class MenuAdmin extends javax.swing.JFrame {
         editarConexionesLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         editarConexionesLabel.setText("Editar conexiones:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        origenCBox.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        origenCBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        destinoCBox.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        destinoCBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        minutosSpinner.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        kilometrosSpinner.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        costoSpinner.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        agregarConexionButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        agregarConexionButton.setText("Agregar");
+
+        eliminarConexionButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        eliminarConexionButton.setText("Eliminar");
+
+        verMapaButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        verMapaButton.setText("Ver mapa");
+
+        cargarArchivoMapaButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        cargarArchivoMapaButton.setText("Cargar archivo");
 
         javax.swing.GroupLayout mapaPanelLayout = new javax.swing.GroupLayout(mapaPanel);
         mapaPanel.setLayout(mapaPanelLayout);
         mapaPanelLayout.setHorizontalGroup(
             mapaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mapaPanelLayout.createSequentialGroup()
-                .addContainerGap(362, Short.MAX_VALUE)
+            .addGroup(mapaPanelLayout.createSequentialGroup()
+                .addGap(96, 96, 96)
                 .addGroup(mapaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(mapaPanelLayout.createSequentialGroup()
-                        .addComponent(agregarCiudadButton)
+                        .addComponent(matrizLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 330, Short.MAX_VALUE)
+                        .addGroup(mapaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(costoSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(estacionCiudadButton)
+                            .addComponent(nombreCiudadTField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(editarConexionesLabel)
+                            .addGroup(mapaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, mapaPanelLayout.createSequentialGroup()
+                                    .addComponent(agregarCiudadButton)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(eliminarCiudadButton))
+                                .addGroup(mapaPanelLayout.createSequentialGroup()
+                                    .addGroup(mapaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mapaPanelLayout.createSequentialGroup()
+                                            .addComponent(minutosSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(43, 43, 43))
+                                        .addGroup(mapaPanelLayout.createSequentialGroup()
+                                            .addGroup(mapaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(origenCBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(agregarConexionButton))
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                    .addGroup(mapaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(kilometrosSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(destinoCBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(eliminarConexionButton))))
+                            .addComponent(nombreCiudadLabel))
+                        .addGap(135, 135, 135))
+                    .addGroup(mapaPanelLayout.createSequentialGroup()
+                        .addComponent(verMapaButton)
                         .addGap(18, 18, 18)
-                        .addComponent(eliminarCiudadButton))
-                    .addComponent(estacionCiudadButton)
-                    .addComponent(nombreCiudadLabel)
-                    .addComponent(nombreCiudadTField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(editarConexionesLabel))
-                .addGap(138, 138, 138))
+                        .addComponent(cargarArchivoMapaButton)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         mapaPanelLayout.setVerticalGroup(
             mapaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mapaPanelLayout.createSequentialGroup()
-                .addGap(48, 48, 48)
-                .addComponent(nombreCiudadLabel)
+                .addGap(55, 55, 55)
+                .addGroup(mapaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nombreCiudadLabel)
+                    .addComponent(matrizLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(nombreCiudadTField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -190,21 +262,131 @@ public class MenuAdmin extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addComponent(editarConexionesLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(209, Short.MAX_VALUE))
+                .addGroup(mapaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(origenCBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(destinoCBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(mapaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(minutosSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(kilometrosSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(costoSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(mapaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(agregarConexionButton)
+                    .addComponent(eliminarConexionButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                .addGroup(mapaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(verMapaButton)
+                    .addComponent(cargarArchivoMapaButton))
+                .addGap(91, 91, 91))
         );
 
         tabs.addTab("Mapa", mapaPanel);
+
+        listaEstacionesTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null},
+                {null},
+                {null},
+                {null}
+            },
+            new String [] {
+                "Lista de estaciones"
+            }
+        ));
+        listaEstacionesScrollPane.setViewportView(listaEstacionesTable);
+
+        nombreEstacionLabel.setText("Nombre de estación:");
+
+        combustibleLabel.setText("Combustible:");
+
+        regularRButton.setText("Regular");
+
+        plusRButton.setText("Plus");
+
+        dieselRButton.setText("Diesel");
+
+        gasLPRButton.setText("Gas LP");
+
+        tiposCargadorLabel.setText("Tipos de cargador:");
+
+        seleccionarCargadorButton.setText("Seleccionar");
+
+        agregarEstacionButton.setText("Agregar");
+
+        eliminarEstacionButton.setText("Eliminar");
+
+        editarCargadoresButton.setText("Editar cargadores");
+
+        cargarArchivoEstacionesButton.setText("Cargar archivo");
 
         javax.swing.GroupLayout estacionesPanelLayout = new javax.swing.GroupLayout(estacionesPanel);
         estacionesPanel.setLayout(estacionesPanelLayout);
         estacionesPanelLayout.setHorizontalGroup(
             estacionesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 700, Short.MAX_VALUE)
+            .addGroup(estacionesPanelLayout.createSequentialGroup()
+                .addGroup(estacionesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(estacionesPanelLayout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(listaEstacionesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(80, 80, 80)
+                        .addGroup(estacionesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(nombreEstacionLabel)
+                            .addComponent(nombreEstacionTField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(combustibleLabel)
+                            .addGroup(estacionesPanelLayout.createSequentialGroup()
+                                .addComponent(regularRButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(plusRButton))
+                            .addGroup(estacionesPanelLayout.createSequentialGroup()
+                                .addComponent(dieselRButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(gasLPRButton))
+                            .addComponent(tiposCargadorLabel)
+                            .addComponent(seleccionarCargadorButton)
+                            .addComponent(agregarEstacionButton)
+                            .addComponent(eliminarEstacionButton)))
+                    .addGroup(estacionesPanelLayout.createSequentialGroup()
+                        .addGap(80, 80, 80)
+                        .addComponent(editarCargadoresButton)
+                        .addGap(37, 37, 37)
+                        .addComponent(cargarArchivoEstacionesButton)))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
         estacionesPanelLayout.setVerticalGroup(
             estacionesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 465, Short.MAX_VALUE)
+            .addGroup(estacionesPanelLayout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addGroup(estacionesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(estacionesPanelLayout.createSequentialGroup()
+                        .addComponent(nombreEstacionLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(nombreEstacionTField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(combustibleLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(estacionesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(regularRButton)
+                            .addComponent(plusRButton))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(estacionesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(dieselRButton)
+                            .addComponent(gasLPRButton))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tiposCargadorLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(seleccionarCargadorButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(agregarEstacionButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(eliminarEstacionButton))
+                    .addComponent(listaEstacionesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(37, 37, 37)
+                .addGroup(estacionesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(editarCargadoresButton)
+                    .addComponent(cargarArchivoEstacionesButton))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
 
         tabs.addTab("Estaciones", estacionesPanel);
@@ -260,25 +442,49 @@ public class MenuAdmin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton agregarCiudadButton;
+    private javax.swing.JButton agregarConexionButton;
+    private javax.swing.JButton agregarEstacionButton;
     private javax.swing.JButton agregarUsuarioButton;
     private javax.swing.JButton cargarArchivoButton;
+    private javax.swing.JButton cargarArchivoEstacionesButton;
+    private javax.swing.JButton cargarArchivoMapaButton;
+    private javax.swing.JLabel combustibleLabel;
     private javax.swing.JLabel correoLabel;
     private javax.swing.JTextField correoTField;
+    private javax.swing.JSpinner costoSpinner;
+    private javax.swing.JComboBox<String> destinoCBox;
+    private javax.swing.JRadioButton dieselRButton;
     private javax.swing.JButton editarButton;
+    private javax.swing.JButton editarCargadoresButton;
     private javax.swing.JLabel editarConexionesLabel;
     private javax.swing.JButton eliminarCiudadButton;
+    private javax.swing.JButton eliminarConexionButton;
+    private javax.swing.JButton eliminarEstacionButton;
     private javax.swing.JButton eliminarUsuarioButton;
     private javax.swing.JButton estacionCiudadButton;
     private javax.swing.JPanel estacionesPanel;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JRadioButton gasLPRButton;
+    private javax.swing.JSpinner kilometrosSpinner;
+    private javax.swing.JScrollPane listaEstacionesScrollPane;
+    private javax.swing.JTable listaEstacionesTable;
     private javax.swing.JScrollPane listaUsuariosScrollPane;
-    private javax.swing.JTable listaUsuariosTabla;
+    private javax.swing.JTable listaUsuariosTable;
     private javax.swing.JPanel mapaPanel;
+    private javax.swing.JLabel matrizLabel;
+    private javax.swing.JSpinner minutosSpinner;
     private javax.swing.JLabel nombreCiudadLabel;
     private javax.swing.JTextField nombreCiudadTField;
+    private javax.swing.JLabel nombreEstacionLabel;
+    private javax.swing.JTextField nombreEstacionTField;
     private javax.swing.JLabel nombreUsuarioLabel;
     private javax.swing.JTextField nombreUsuarioTField;
+    private javax.swing.JComboBox<String> origenCBox;
+    private javax.swing.JRadioButton plusRButton;
+    private javax.swing.JRadioButton regularRButton;
+    private javax.swing.JButton seleccionarCargadorButton;
     private javax.swing.JTabbedPane tabs;
+    private javax.swing.JLabel tiposCargadorLabel;
     private javax.swing.JPanel usuariosPanel;
+    private javax.swing.JButton verMapaButton;
     // End of variables declaration//GEN-END:variables
 }
