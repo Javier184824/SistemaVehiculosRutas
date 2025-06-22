@@ -8,6 +8,6 @@ package modelo;
  *
  * @author javie
  */
-public class Admin {
+public class Admin extends Usuario{
     
 }

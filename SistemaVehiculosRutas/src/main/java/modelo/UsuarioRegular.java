@@ -8,6 +8,6 @@ package modelo;
  *
  * @author javie
  */
-public class UsuarioRegular {
+public class UsuarioRegular extends Usuario{
     
 }
