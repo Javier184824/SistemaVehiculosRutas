@@ -4,12 +4,13 @@
  */
 package Models;
 
-import Interfaces.Edge;
-import Interfaces.Node;
-import Interfaces.Serializable;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+
+import Interfaces.Edge;
+import Interfaces.Node;
+import Interfaces.Serializable;
 
 /**
  *
@@ -31,6 +32,9 @@ public class Connection implements Edge, Serializable{
         this.distance = distance;
         this.timeMinutes = timeMinutes;
         this.cost = cost;
+        // Set city IDs for persistence
+        this.fromCityId = fromCity != null ? fromCity.getId() : null;
+        this.toCityId = toCity != null ? toCity.getId() : null;
     }
     
     // Edge interface implementation
@@ -57,10 +61,16 @@ public class Connection implements Edge, Serializable{
     
     // Getters and setters
     public City getFromCity() { return fromCity; }
-    public void setFromCity(City fromCity) { this.fromCity = fromCity; }
+    public void setFromCity(City fromCity) { 
+        this.fromCity = fromCity; 
+        this.fromCityId = fromCity != null ? fromCity.getId() : null;
+    }
     
     public City getToCity() { return toCity; }
-    public void setToCity(City toCity) { this.toCity = toCity; }
+    public void setToCity(City toCity) { 
+        this.toCity = toCity; 
+        this.toCityId = toCity != null ? toCity.getId() : null;
+    }
     
     public void setDistance(double distance) { this.distance = distance; }
     public void setTimeMinutes(int timeMinutes) { this.timeMinutes = timeMinutes; }
@@ -75,9 +85,9 @@ public class Connection implements Edge, Serializable{
     
     @Override
     public void serialize(DataOutputStream out) throws IOException {
-        // Serialize cities by ID only to avoid circular references
-        out.writeUTF(fromCity != null ? fromCity.getId() : "");
-        out.writeUTF(toCity != null ? toCity.getId() : "");
+        // Serialize city IDs for persistence
+        out.writeUTF(fromCityId != null ? fromCityId : "");
+        out.writeUTF(toCityId != null ? toCityId : "");
         out.writeDouble(distance);
         out.writeInt(timeMinutes);
         out.writeDouble(cost);
@@ -85,21 +95,25 @@ public class Connection implements Edge, Serializable{
     
     @Override
     public void deserialize(DataInputStream in) throws IOException {
-        // Note: Cities must be resolved by ID after deserialization
+        // Read city IDs from serialized data
         String fromCityId = in.readUTF();
         String toCityId = in.readUTF();
         this.distance = in.readDouble();
         this.timeMinutes = in.readInt();
         this.cost = in.readDouble();
         
-        // Temporary storage for city IDs - will be resolved later
+        // Store city IDs for later resolution
         this.fromCityId = fromCityId.isEmpty() ? null : fromCityId;
         this.toCityId = toCityId.isEmpty() ? null : toCityId;
+        
+        // City references will be null until resolved
+        this.fromCity = null;
+        this.toCity = null;
     }
     
-    // Temporary fields for deserialization
-    private transient String fromCityId;
-    private transient String toCityId;
+    // Fields for storing city IDs (non-transient for persistence)
+    private String fromCityId;
+    private String toCityId;
     
     public String getFromCityId() { return fromCityId; }
     public String getToCityId() { return toCityId; }
@@ -118,7 +132,25 @@ public class Connection implements Edge, Serializable{
     
     @Override
     public String toString() {
-        return fromCity.getName() + " -> " + toCity.getName() + 
+        String fromName;
+        if (fromCity != null) {
+            fromName = fromCity.getName();
+        } else if (fromCityId != null) {
+            fromName = fromCityId + " (ID)";
+        } else {
+            fromName = "Unknown";
+        }
+        
+        String toName;
+        if (toCity != null) {
+            toName = toCity.getName();
+        } else if (toCityId != null) {
+            toName = toCityId + " (ID)";
+        } else {
+            toName = "Unknown";
+        }
+        
+        return fromName + " -> " + toName + 
                " (" + distance + "km, " + timeMinutes + "min, $" + cost + ")";
     }
     

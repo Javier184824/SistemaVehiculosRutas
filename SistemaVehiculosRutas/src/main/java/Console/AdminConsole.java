@@ -4,6 +4,8 @@
  */
 package Console;
 
+import java.util.List;
+
 import Admin.AdminService;
 import Models.City;
 import Models.Connection;
@@ -11,7 +13,6 @@ import User.User;
 import User.UserRole;
 import Vehicle.ChargerType;
 import Vehicle.FuelType;
-import java.util.List;
 
 /**
  *
@@ -262,7 +263,8 @@ public class AdminConsole {
         
         for (Connection conn : connections) {
             System.out.printf("%-20s %-20s %-10.1f %-10d %-10.2f%n",
-                conn.getFromCity().getName(), conn.getToCity().getName(),
+                conn.getFromCity() != null ? conn.getFromCity().getName() : "Unknown",
+                conn.getToCity() != null ? conn.getToCity().getName() : "Unknown",
                 conn.getDistance(), conn.getTimeMinutes(), conn.getCost());
         }
         
@@ -326,7 +328,8 @@ public class AdminConsole {
         for (int i = 0; i < connections.size(); i++) {
             Connection conn = connections.get(i);
             System.out.printf("%d. %s → %s%n", i + 1, 
-                conn.getFromCity().getName(), conn.getToCity().getName());
+                conn.getFromCity() != null ? conn.getFromCity().getName() : "Unknown",
+                conn.getToCity() != null ? conn.getToCity().getName() : "Unknown");
         }
         
         int index = MenuUtil.getIntInput("Select connection (number): ") - 1;
@@ -337,12 +340,17 @@ public class AdminConsole {
         
         Connection connToDelete = connections.get(index);
         
+        String fromId = connToDelete.getFromCity() != null ? connToDelete.getFromCity().getId() : connToDelete.getFromCityId();
+        String toId = connToDelete.getToCity() != null ? connToDelete.getToCity().getId() : connToDelete.getToCityId();
+        
+        System.out.println("Debug: Attempting to delete connection with IDs: " + fromId + " -> " + toId);
+        System.out.println("Debug: Connection object: " + connToDelete);
+        
         if (!MenuUtil.getConfirmation("Are you sure you want to delete this connection?")) {
             return;
         }
         
-        if (adminService.getCityManager().deleteConnection(
-                connToDelete.getFromCity().getId(), connToDelete.getToCity().getId())) {
+        if (adminService.getCityManager().deleteConnection(fromId, toId)) {
             MenuUtil.showSuccess("Connection deleted successfully!");
         } else {
             MenuUtil.showError("Failed to delete connection.");
