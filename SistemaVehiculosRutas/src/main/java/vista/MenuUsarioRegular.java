@@ -4,16 +4,20 @@
  */
 package vista;
 
+import Main.RouteSystemContext;
+
 /**
  *
  * @author javie
  */
 public class MenuUsarioRegular extends javax.swing.JFrame {
-
+    
+    private RouteSystemContext context;
     /**
      * Creates new form MenuUsuarioRegular
      */
-    public MenuUsarioRegular() {
+    public MenuUsarioRegular(RouteSystemContext context) {
+        this.context = context;
         initComponents();
     }
 
@@ -57,6 +61,8 @@ public class MenuUsarioRegular extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menú");
 
+        rutasPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
         tablaRutas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -70,81 +76,46 @@ public class MenuUsarioRegular extends javax.swing.JFrame {
         ));
         tablaRutasScrollPane.setViewportView(tablaRutas);
 
+        rutasPanel.add(tablaRutasScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, -1, -1));
+
         origenLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         origenLabel.setText("Orígen:");
+        rutasPanel.add(origenLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 50, -1, -1));
 
         origenCBox.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         origenCBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        rutasPanel.add(origenCBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 80, -1, -1));
 
         destinoLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         destinoLabel.setText("Destino:");
+        rutasPanel.add(destinoLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 120, -1, -1));
 
         destinoCBox.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         destinoCBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        rutasPanel.add(destinoCBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 150, -1, -1));
 
         filtrarLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         filtrarLabel.setText("Filtrar:");
+        rutasPanel.add(filtrarLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 190, -1, -1));
 
         filtroBGroup.add(porVehiculoRButton);
         porVehiculoRButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         porVehiculoRButton.setSelected(true);
         porVehiculoRButton.setText("Por vehículo");
+        rutasPanel.add(porVehiculoRButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 220, -1, -1));
 
         filtroBGroup.add(porTipoRButton);
         porTipoRButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         porTipoRButton.setText("Por tipo");
+        rutasPanel.add(porTipoRButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 250, -1, -1));
 
         filtrarCBox.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         filtrarCBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        javax.swing.GroupLayout rutasPanelLayout = new javax.swing.GroupLayout(rutasPanel);
-        rutasPanel.setLayout(rutasPanelLayout);
-        rutasPanelLayout.setHorizontalGroup(
-            rutasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(rutasPanelLayout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addGroup(rutasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(destinoLabel)
-                    .addGroup(rutasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(origenCBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(destinoCBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(filtrarCBox, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(origenLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(filtrarLabel)
-                    .addComponent(porVehiculoRButton)
-                    .addComponent(porTipoRButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
-                .addComponent(tablaRutasScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37))
-        );
-        rutasPanelLayout.setVerticalGroup(
-            rutasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(rutasPanelLayout.createSequentialGroup()
-                .addGroup(rutasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(rutasPanelLayout.createSequentialGroup()
-                        .addGap(57, 57, 57)
-                        .addComponent(origenLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(origenCBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(61, 61, 61)
-                        .addComponent(destinoLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(destinoCBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(42, 42, 42)
-                        .addComponent(filtrarLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(porVehiculoRButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(porTipoRButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(filtrarCBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(rutasPanelLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(tablaRutasScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(20, Short.MAX_VALUE))
-        );
+        rutasPanel.add(filtrarCBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 280, -1, -1));
 
         jTabbedPane4.addTab("Rutas", rutasPanel);
+
+        vehiculosPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tablaVehiculos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -164,89 +135,43 @@ public class MenuUsarioRegular extends javax.swing.JFrame {
         });
         tablaVehiculosScrollPane.setViewportView(tablaVehiculos);
 
+        vehiculosPanel.add(tablaVehiculosScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 12, 430, 420));
+
         nombreLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         nombreLabel.setText("Nombre:");
+        vehiculosPanel.add(nombreLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 30, -1, -1));
+        vehiculosPanel.add(nombreTField, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 50, -1, -1));
 
         tipoVehiculoLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tipoVehiculoLabel.setText("Tipo de vehículo:");
+        vehiculosPanel.add(tipoVehiculoLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 90, -1, -1));
 
         tipoVehiculoBGroup.add(electricoRButton);
         electricoRButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         electricoRButton.setText("Eléctrico");
+        vehiculosPanel.add(electricoRButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 120, -1, -1));
 
         tipoVehiculoBGroup.add(combustibleRButton);
         combustibleRButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         combustibleRButton.setSelected(true);
         combustibleRButton.setText("Combustible");
+        vehiculosPanel.add(combustibleRButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 120, -1, -1));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setText("Tipo de combustible:");
+        vehiculosPanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 160, -1, -1));
 
         tipoCombustibleCbox.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tipoCombustibleCbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        vehiculosPanel.add(tipoCombustibleCbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 190, -1, -1));
 
         agregarButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         agregarButton.setText("Agregar");
+        vehiculosPanel.add(agregarButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 250, -1, -1));
 
         eliminarButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         eliminarButton.setText("Eliminar");
-
-        javax.swing.GroupLayout vehiculosPanelLayout = new javax.swing.GroupLayout(vehiculosPanel);
-        vehiculosPanel.setLayout(vehiculosPanelLayout);
-        vehiculosPanelLayout.setHorizontalGroup(
-            vehiculosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(vehiculosPanelLayout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(tablaVehiculosScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
-                .addGroup(vehiculosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, vehiculosPanelLayout.createSequentialGroup()
-                        .addComponent(electricoRButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(combustibleRButton)
-                        .addGap(67, 67, 67))
-                    .addGroup(vehiculosPanelLayout.createSequentialGroup()
-                        .addGroup(vehiculosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(nombreTField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(nombreLabel)
-                            .addComponent(tipoVehiculoLabel)
-                            .addComponent(jLabel1)
-                            .addComponent(tipoCombustibleCbox, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(vehiculosPanelLayout.createSequentialGroup()
-                                .addComponent(agregarButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(eliminarButton)))
-                        .addContainerGap())))
-        );
-        vehiculosPanelLayout.setVerticalGroup(
-            vehiculosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(vehiculosPanelLayout.createSequentialGroup()
-                .addGroup(vehiculosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(vehiculosPanelLayout.createSequentialGroup()
-                        .addGap(48, 48, 48)
-                        .addComponent(nombreLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(nombreTField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(tipoVehiculoLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(vehiculosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(combustibleRButton, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(electricoRButton, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tipoCombustibleCbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
-                        .addGroup(vehiculosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(agregarButton)
-                            .addComponent(eliminarButton))
-                        .addGap(163, 163, 163))
-                    .addGroup(vehiculosPanelLayout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addComponent(tablaVehiculosScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        vehiculosPanel.add(eliminarButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 250, -1, -1));
 
         jTabbedPane4.addTab("Vehículos", vehiculosPanel);
 
@@ -254,7 +179,7 @@ public class MenuUsarioRegular extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane4)
+            .addComponent(jTabbedPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -263,44 +188,6 @@ public class MenuUsarioRegular extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MenuUsarioRegular.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MenuUsarioRegular.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MenuUsarioRegular.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MenuUsarioRegular.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MenuUsarioRegular().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton agregarButton;
