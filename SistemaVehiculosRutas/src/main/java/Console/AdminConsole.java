@@ -65,7 +65,8 @@ public class AdminConsole {
                 "Delete City",
                 "List All Connections",
                 "Create New Connection",
-                "Delete Connection"
+                "Delete Connection",
+                "Fix Corrupted Connections"
             );
             
             switch (choice) {
@@ -76,6 +77,7 @@ public class AdminConsole {
                 case 4 -> listAllConnections();
                 case 5 -> createNewConnection();
                 case 6 -> deleteConnection();
+                case 7 -> fixCorruptedConnections();
                 case -1 -> running = false;
                 default -> MenuUtil.showError("Invalid option.");
             }
@@ -340,6 +342,13 @@ public class AdminConsole {
         
         Connection connToDelete = connections.get(index);
         
+        // Add detailed debugging
+        System.out.println("Debug: Connection details:");
+        System.out.println("  From City: " + (connToDelete.getFromCity() != null ? connToDelete.getFromCity().getName() : "null"));
+        System.out.println("  From City ID: " + connToDelete.getFromCityId());
+        System.out.println("  To City: " + (connToDelete.getToCity() != null ? connToDelete.getToCity().getName() : "null"));
+        System.out.println("  To City ID: " + connToDelete.getToCityId());
+        
         String fromId = connToDelete.getFromCity() != null ? connToDelete.getFromCity().getId() : connToDelete.getFromCityId();
         String toId = connToDelete.getToCity() != null ? connToDelete.getToCity().getId() : connToDelete.getToCityId();
         
@@ -354,6 +363,20 @@ public class AdminConsole {
             MenuUtil.showSuccess("Connection deleted successfully!");
         } else {
             MenuUtil.showError("Failed to delete connection.");
+        }
+    }
+    
+    private void fixCorruptedConnections() {
+        System.out.println("\n🔄 Fix Corrupted Connections");
+        
+        if (!MenuUtil.getConfirmation("This will delete and recreate all connections. Are you sure?")) {
+            return;
+        }
+        
+        if (adminService.getCityManager().fixCorruptedConnections()) {
+            MenuUtil.showSuccess("Connections fixed successfully!");
+        } else {
+            MenuUtil.showError("Failed to fix connections.");
         }
     }
     

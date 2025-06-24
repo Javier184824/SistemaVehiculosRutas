@@ -4,10 +4,11 @@
  */
 package Graph;
 
-import Interfaces.Node;
-import Models.City;
 import java.util.ArrayList;
 import java.util.List;
+
+import Interfaces.Node;
+import Models.City;
 
 /**
  *

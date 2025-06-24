@@ -5,6 +5,7 @@
 package Admin;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
@@ -161,26 +162,51 @@ public class CityManagementService {
         }
         
         try {
-            List<Connection> connections = dataManager.loadList(FileConstants.CONNECTIONS_FILE, Connection::new);
+            List<Connection> connections;
+            
+            // Check if connections file exists, if not create empty list
+            if (dataManager.fileExists(FileConstants.CONNECTIONS_FILE)) {
+                try {
+                    connections = dataManager.loadList(FileConstants.CONNECTIONS_FILE, Connection::new);
+                    System.out.println("Debug: Loaded " + connections.size() + " existing connections");
+                } catch (SerializationException e) {
+                    // File exists but is corrupted, delete it and create new
+                    System.out.println("Debug: Connections file is corrupted, deleting and creating new");
+                    dataManager.deleteFile(FileConstants.CONNECTIONS_FILE);
+                    connections = new ArrayList<>();
+                }
+            } else {
+                connections = new ArrayList<>();
+                System.out.println("Debug: Connections file not found, creating new list");
+            }
             
             // Check for duplicate connections using city IDs (since city references may not be resolved)
             String fromCityId = connection.getFromCity().getId();
             String toCityId = connection.getToCity().getId();
+            
+            System.out.println("Debug: Attempting to create connection from " + fromCityId + " to " + toCityId);
             
             boolean connectionExists = connections.stream()
                 .anyMatch(conn -> {
                     // Use getFromCityId() and getToCityId() for unresolved connections
                     String connFromId = conn.getFromCity() != null ? conn.getFromCity().getId() : conn.getFromCityId();
                     String connToId = conn.getToCity() != null ? conn.getToCity().getId() : conn.getToCityId();
-                    return fromCityId.equals(connFromId) && toCityId.equals(connToId);
+                    boolean matches = fromCityId.equals(connFromId) && toCityId.equals(connToId);
+                    if (matches) {
+                        System.out.println("Debug: Found existing connection: " + connFromId + " -> " + connToId);
+                    }
+                    return matches;
                 });
             
             if (connectionExists) {
+                System.out.println("Debug: Connection already exists, returning false");
                 return false; // Connection already exists
             }
             
+            System.out.println("Debug: Adding new connection to list");
             connections.add(connection);
             dataManager.saveList(connections, FileConstants.CONNECTIONS_FILE);
+            System.out.println("Debug: Connection saved successfully");
             return true;
             
         } catch (SerializationException e) {
@@ -202,26 +228,33 @@ public class CityManagementService {
         }
         
         try {
-            List<Connection> connections = dataManager.loadList(FileConstants.CONNECTIONS_FILE, Connection::new);
+            List<Connection> connections;
             List<City> cities = getAllCities();
             
-            // Resolve city references
-            Function<String, City> cityResolver = cityId -> 
-                cities.stream().filter(c -> cityId.equals(c.getId())).findFirst().orElse(null);
-            
-            for (Connection conn : connections) {
-                conn.resolveCityReferences(cityResolver);
-            }
-            
-            // Find and update the connection
-            for (int i = 0; i < connections.size(); i++) {
-                Connection conn = connections.get(i);
-                if (fromCityId.equals(conn.getFromCity() != null ? conn.getFromCity().getId() : conn.getFromCityId()) && 
-                    toCityId.equals(conn.getToCity() != null ? conn.getToCity().getId() : conn.getToCityId())) {
-                    connections.set(i, updatedConnection);
-                    dataManager.saveList(connections, FileConstants.CONNECTIONS_FILE);
-                    return true;
+            // Check if connections file exists, if not return false
+            if (dataManager.fileExists(FileConstants.CONNECTIONS_FILE)) {
+                connections = dataManager.loadList(FileConstants.CONNECTIONS_FILE, Connection::new);
+                
+                // Resolve city references
+                Function<String, City> cityResolver = cityId -> 
+                    cities.stream().filter(c -> cityId.equals(c.getId())).findFirst().orElse(null);
+                
+                for (Connection conn : connections) {
+                    conn.resolveCityReferences(cityResolver);
                 }
+                
+                // Find and update the connection
+                for (int i = 0; i < connections.size(); i++) {
+                    Connection conn = connections.get(i);
+                    if (fromCityId.equals(conn.getFromCity() != null ? conn.getFromCity().getId() : conn.getFromCityId()) && 
+                        toCityId.equals(conn.getToCity() != null ? conn.getToCity().getId() : conn.getToCityId())) {
+                        connections.set(i, updatedConnection);
+                        dataManager.saveList(connections, FileConstants.CONNECTIONS_FILE);
+                        return true;
+                    }
+                }
+            } else {
+                System.out.println("Debug: Connections file not found, nothing to update");
             }
             
         } catch (SerializationException e) {
@@ -244,28 +277,35 @@ public class CityManagementService {
         }
         
         try {
-            List<Connection> connections = dataManager.loadList(FileConstants.CONNECTIONS_FILE, Connection::new);
+            List<Connection> connections;
             List<City> cities = getAllCities();
             
-            // First migrate connections to ensure they have proper city IDs
-            migrateConnections(connections, cities);
-            
-            System.out.println("Debug: Attempting to delete connection from " + fromCityId + " to " + toCityId);
-            System.out.println("Debug: Found " + connections.size() + " connections to check");
-            
-            boolean removed = connections.removeIf(conn -> {
-                String connFromId = conn.getFromCityId();
-                String connToId = conn.getToCityId();
-                boolean matches = fromCityId.equals(connFromId) && toCityId.equals(connToId);
-                System.out.println("Debug: Checking connection " + connFromId + " -> " + connToId + " matches: " + matches);
-                return matches;
-            });
-            
-            System.out.println("Debug: Connection removed: " + removed);
-            
-            if (removed) {
-                dataManager.saveList(connections, FileConstants.CONNECTIONS_FILE);
-                return true;
+            // Check if connections file exists, if not return false
+            if (dataManager.fileExists(FileConstants.CONNECTIONS_FILE)) {
+                connections = dataManager.loadList(FileConstants.CONNECTIONS_FILE, Connection::new);
+                
+                // First migrate connections to ensure they have proper city IDs
+                migrateConnections(connections, cities);
+                
+                System.out.println("Debug: Attempting to delete connection from " + fromCityId + " to " + toCityId);
+                System.out.println("Debug: Found " + connections.size() + " connections to check");
+                
+                boolean removed = connections.removeIf(conn -> {
+                    String connFromId = conn.getFromCityId();
+                    String connToId = conn.getToCityId();
+                    boolean matches = fromCityId.equals(connFromId) && toCityId.equals(connToId);
+                    System.out.println("Debug: Checking connection " + connFromId + " -> " + connToId + " matches: " + matches);
+                    return matches;
+                });
+                
+                System.out.println("Debug: Connection removed: " + removed);
+                
+                if (removed) {
+                    dataManager.saveList(connections, FileConstants.CONNECTIONS_FILE);
+                    return true;
+                }
+            } else {
+                System.out.println("Debug: Connections file not found, nothing to delete");
             }
             
         } catch (SerializationException e) {
@@ -281,17 +321,37 @@ public class CityManagementService {
      */
     public List<Connection> getAllConnections() {
         try {
-            List<Connection> connections = dataManager.loadList(FileConstants.CONNECTIONS_FILE, Connection::new);
+            List<Connection> connections;
             List<City> cities = getAllCities();
             
-            System.out.println("Debug: Loaded " + connections.size() + " connections and " + cities.size() + " cities");
-            
-            // Migrate connections to ensure they have proper city IDs
-            migrateConnections(connections, cities);
+            // Check if connections file exists, if not return empty list
+            if (dataManager.fileExists(FileConstants.CONNECTIONS_FILE)) {
+                connections = dataManager.loadList(FileConstants.CONNECTIONS_FILE, Connection::new);
+                System.out.println("Debug: Loaded " + connections.size() + " connections and " + cities.size() + " cities");
+                
+                // Check for corrupted connections and log them
+                long corruptedCount = connections.stream()
+                    .filter(conn -> conn.getFromCityId() == null || conn.getToCityId() == null)
+                    .count();
+                
+                if (corruptedCount > 0) {
+                    System.out.println("Debug: Found " + corruptedCount + " connections with null city IDs");
+                    System.out.println("Debug: Use 'Fix Corrupted Connections' option to resolve this issue");
+                }
+                
+                // Migrate connections to ensure they have proper city IDs
+                migrateConnections(connections, cities);
+            } else {
+                connections = new ArrayList<>();
+                System.out.println("Debug: Connections file not found, returning empty list");
+            }
             
             return connections;
             
         } catch (SerializationException e) {
+            // File exists but is corrupted, delete it and return empty list
+            System.out.println("Debug: Connections file is corrupted, deleting and returning empty list");
+            dataManager.deleteFile(FileConstants.CONNECTIONS_FILE);
             System.err.println("Error loading connections: " + e.getMessage());
             return new ArrayList<>();
         }
@@ -306,17 +366,23 @@ public class CityManagementService {
         
         boolean needsSave = false;
         for (Connection conn : connections) {
-            // If city IDs are null but city references exist, set the IDs
-            if (conn.getFromCityId() == null && conn.getFromCity() != null) {
-                conn.setFromCity(conn.getFromCity()); // This will set the ID
-                needsSave = true;
+            // If city IDs exist but city references are null, resolve them
+            if (conn.getFromCityId() != null && conn.getFromCity() == null) {
+                City fromCity = cityResolver.apply(conn.getFromCityId());
+                if (fromCity != null) {
+                    conn.setFromCity(fromCity);
+                    needsSave = true;
+                }
             }
-            if (conn.getToCityId() == null && conn.getToCity() != null) {
-                conn.setToCity(conn.getToCity()); // This will set the ID
-                needsSave = true;
+            if (conn.getToCityId() != null && conn.getToCity() == null) {
+                City toCity = cityResolver.apply(conn.getToCityId());
+                if (toCity != null) {
+                    conn.setToCity(toCity);
+                    needsSave = true;
+                }
             }
             
-            // Resolve city references
+            // Also resolve any remaining null references
             conn.resolveCityReferences(cityResolver);
         }
         
@@ -350,5 +416,55 @@ public class CityManagementService {
         return getAllConnections().stream()
             .filter(conn -> cityId.equals(conn.getToCity() != null ? conn.getToCity().getId() : conn.getToCityId()))
             .toList();
+    }
+    
+    /**
+     * Fixes corrupted connections by recreating them with proper city IDs
+     * This method should be called if connections have null city IDs
+     * @return true if connections were fixed successfully
+     */
+    public boolean fixCorruptedConnections() {
+        try {
+            List<City> cities = getAllCities();
+            
+            if (cities.size() < 6) {
+                System.out.println("Debug: Not enough cities to recreate connections");
+                return false;
+            }
+            
+            System.out.println("Debug: Recreating default connections...");
+            
+            // Delete existing connections file
+            dataManager.deleteFile(FileConstants.CONNECTIONS_FILE);
+            
+            // Recreate default connections
+            City sanJose = cities.get(0);
+            City cartago = cities.get(1);
+            City alajuela = cities.get(2);
+            City heredia = cities.get(3);
+            City puntarenas = cities.get(4);
+            City liberia = cities.get(5);
+            
+            List<Connection> defaultConnections = Arrays.asList(
+                new Connection(sanJose, cartago, 22, 35, 1200),
+                new Connection(cartago, sanJose, 22, 35, 1200),
+                new Connection(sanJose, alajuela, 20, 30, 1100),
+                new Connection(alajuela, sanJose, 20, 30, 1100),
+                new Connection(sanJose, heredia, 12, 25, 800),
+                new Connection(heredia, sanJose, 12, 25, 800),
+                new Connection(sanJose, puntarenas, 117, 90, 3500),
+                new Connection(puntarenas, sanJose, 117, 90, 3500),
+                new Connection(alajuela, liberia, 215, 180, 6500),
+                new Connection(liberia, alajuela, 215, 180, 6500)
+            );
+            
+            dataManager.saveList(defaultConnections, FileConstants.CONNECTIONS_FILE);
+            System.out.println("Debug: Recreated " + defaultConnections.size() + " connections");
+            return true;
+            
+        } catch (SerializationException e) {
+            System.err.println("Error recreating connections: " + e.getMessage());
+            return false;
+        }
     }
 }
