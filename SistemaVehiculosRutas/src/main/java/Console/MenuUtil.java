@@ -1,6 +1,17 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * Nombre del Archivo: MenuUtil.java
+ * 
+ * Descripcion: Clase de utilidades para interfaces de consola. Proporciona métodos
+ *              estáticos para la interacción con el usuario a través de consola,
+ *              incluyendo menús, entrada de datos con validación, mensajes de
+ *              estado y control de la interfaz de usuario. Facilita la creación
+ *              de interfaces de consola consistentes y amigables.
+ * 
+ * Nombre de los Integrantes:
+ * Javier Lee Liang
+ * Paulo César Herrera Arias
+ * José Emilio Alvarado Mendez
+ * Josué Santiago Hidalgo Sandoval
  */
 package Console;
 
@@ -8,18 +19,33 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
- *
- * @author JE
+ * Utilidades para interfaces de consola
+ * 
+ * Esta clase proporciona métodos estáticos para facilitar la creación de
+ * interfaces de consola interactivas y amigables al usuario:
+ * - Generación de menús con formato consistente
+ * - Entrada de datos con validación robusta
+ * - Mensajes de estado con iconos visuales
+ * - Control de la interfaz de usuario
+ * 
+ * Todos los métodos son estáticos para facilitar su uso sin instanciación.
  */
 public class MenuUtil {
     
     private static final Scanner scanner = new Scanner(System.in);
     
     /**
-     * Displays a menu and gets user choice
-     * @param title the menu title
-     * @param options the menu options
-     * @return the selected option index (0-based), or -1 for invalid input
+     * Muestra un menú y obtiene la selección del usuario
+     * 
+     * @param title El título del menú
+     * @param options Las opciones del menú (varargs)
+     * @return El índice de la opción seleccionada (base 0), o -1 para entrada inválida
+     * 
+     * Características:
+     * - Formato visual consistente con separadores
+     * - Opción "0" para salir/volver automáticamente
+     * - Validación de entrada numérica
+     * - Conversión automática de índice (base 1 a base 0)
      */
     public static int displayMenu(String title, String... options) {
         System.out.println("\n" + "=".repeat(50));
@@ -36,9 +62,16 @@ public class MenuUtil {
     }
     
     /**
-     * Gets integer input from user with validation
-     * @param prompt the input prompt
-     * @return the integer input
+     * Obtiene entrada de tipo entero del usuario con validación
+     * 
+     * @param prompt El mensaje de solicitud de entrada
+     * @return El valor entero ingresado por el usuario
+     * 
+     * Validaciones:
+     * - Maneja excepciones de tipo de entrada incorrecto
+     * - Bucle infinito hasta obtener entrada válida
+     * - Consume caracteres inválidos del buffer
+     * - Mensaje de error informativo
      */
     public static int getIntInput(String prompt) {
         while (true) {
@@ -55,9 +88,16 @@ public class MenuUtil {
     }
     
     /**
-     * Gets double input from user with validation
-     * @param prompt the input prompt
-     * @return the double input
+     * Obtiene entrada de tipo double del usuario con validación
+     * 
+     * @param prompt El mensaje de solicitud de entrada
+     * @return El valor double ingresado por el usuario
+     * 
+     * Validaciones:
+     * - Maneja excepciones de tipo de entrada incorrecto
+     * - Bucle infinito hasta obtener entrada válida
+     * - Consume caracteres inválidos del buffer
+     * - Mensaje de error informativo
      */
     public static double getDoubleInput(String prompt) {
         while (true) {
@@ -74,9 +114,15 @@ public class MenuUtil {
     }
     
     /**
-     * Gets string input from user
-     * @param prompt the input prompt
-     * @return the string input (trimmed)
+     * Obtiene entrada de tipo String del usuario
+     * 
+     * @param prompt El mensaje de solicitud de entrada
+     * @return La cadena ingresada por el usuario (sin espacios en blanco)
+     * 
+     * Características:
+     * - Elimina espacios en blanco al inicio y final
+     * - No valida si la entrada está vacía
+     * - Consume la línea completa del buffer
      */
     public static String getStringInput(String prompt) {
         System.out.print(prompt);
@@ -84,9 +130,15 @@ public class MenuUtil {
     }
     
     /**
-     * Gets non-empty string input from user
-     * @param prompt the input prompt
-     * @return the non-empty string input
+     * Obtiene entrada de tipo String no vacía del usuario
+     * 
+     * @param prompt El mensaje de solicitud de entrada
+     * @return La cadena no vacía ingresada por el usuario
+     * 
+     * Validaciones:
+     * - Bucle hasta obtener entrada no vacía
+     * - Mensaje de error si la entrada está vacía
+     * - Elimina espacios en blanco automáticamente
      */
     public static String getNonEmptyStringInput(String prompt) {
         String input;
@@ -100,9 +152,15 @@ public class MenuUtil {
     }
     
     /**
-     * Gets yes/no confirmation from user
-     * @param prompt the confirmation prompt
-     * @return true for yes, false for no
+     * Obtiene confirmación sí/no del usuario
+     * 
+     * @param prompt El mensaje de confirmación
+     * @return true para sí, false para no
+     * 
+     * Entradas válidas:
+     * - Sí: "y", "yes" (case insensitive)
+     * - No: "n", "no" (case insensitive)
+     * - Bucle hasta obtener entrada válida
      */
     public static boolean getConfirmation(String prompt) {
         while (true) {
@@ -118,32 +176,56 @@ public class MenuUtil {
     }
     
     /**
-     * Displays an error message
-     * @param message the error message
+     * Muestra un mensaje de error con formato visual
+     * 
+     * @param message El mensaje de error a mostrar
+     * 
+     * Características:
+     * - Icono visual de error (❌)
+     * - Formato consistente con otros mensajes
+     * - Salto de línea para separación visual
      */
     public static void showError(String message) {
         System.out.println("\n❌ ERROR: " + message);
     }
     
     /**
-     * Displays a success message
-     * @param message the success message
+     * Muestra un mensaje de éxito con formato visual
+     * 
+     * @param message El mensaje de éxito a mostrar
+     * 
+     * Características:
+     * - Icono visual de éxito (✅)
+     * - Formato consistente con otros mensajes
+     * - Salto de línea para separación visual
      */
     public static void showSuccess(String message) {
         System.out.println("\n✅ SUCCESS: " + message);
     }
     
     /**
-     * Displays an info message
-     * @param message the info message
+     * Muestra un mensaje informativo con formato visual
+     * 
+     * @param message El mensaje informativo a mostrar
+     * 
+     * Características:
+     * - Icono visual de información (📋)
+     * - Formato consistente con otros mensajes
+     * - Salto de línea para separación visual
      */
     public static void showInfo(String message) {
         System.out.println("\n📋 INFO: " + message);
     }
     
     /**
-     * Pauses execution until user presses Enter
-     * @param message the pause message
+     * Pausa la ejecución hasta que el usuario presione Enter
+     * 
+     * @param message El mensaje de pausa a mostrar
+     * 
+     * Características:
+     * - Permite al usuario leer información antes de continuar
+     * - No requiere entrada específica, solo Enter
+     * - Útil para controlar el flujo de la aplicación
      */
     public static void pause(String message) {
         System.out.print("\n" + message + " (Press Enter to continue...)");
@@ -151,7 +233,13 @@ public class MenuUtil {
     }
     
     /**
-     * Clears the console (works on most terminals)
+     * Limpia la consola para mejorar la legibilidad
+     * 
+     * Características:
+     * - Detecta automáticamente el sistema operativo
+     * - Usa comandos específicos para Windows y Unix/Linux
+     * - Fallback a impresión de líneas vacías si falla
+     * - Maneja excepciones de forma silenciosa
      */
     public static void clearConsole() {
         try {

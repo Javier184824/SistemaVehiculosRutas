@@ -1,8 +1,23 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * Nombre del Archivo: UserConsole.java
+ * 
+ * Descripcion: Consola de usuario regular del sistema de planificación de rutas.
+ *              Proporciona una interfaz completa de consola para usuarios no
+ *              administradores, incluyendo gestión de vehículos personales,
+ *              planificación de rutas, exploración de ciudades y estaciones,
+ *              y gestión de perfil personal. Ofrece una experiencia de usuario
+ *              intuitiva y completa para todas las funcionalidades de usuario regular.
+ * 
+ * Nombre de los Integrantes:
+ * Javier Lee Liang
+ * Paulo César Herrera Arias
+ * José Emilio Alvarado Mendez
+ * Josué Santiago Hidalgo Sandoval
  */
 package User;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import Console.MenuUtil;
 import Models.City;
@@ -13,23 +28,45 @@ import Vehicle.ElectricVehicle;
 import Vehicle.FuelType;
 import Vehicle.FuelVehicle;
 import Vehicle.Vehicle;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
- *
- * @author JE
+ * Consola de usuario regular del sistema
+ * 
+ * Esta clase proporciona una interfaz completa de consola para usuarios regulares,
+ * incluyendo:
+ * - Gestión completa de vehículos personales
+ * - Planificación y búsqueda de rutas
+ * - Exploración de ciudades y estaciones
+ * - Gestión de perfil personal
+ * - Interfaz intuitiva con menús organizados
+ * 
+ * Proporciona acceso a todas las funcionalidades disponibles para usuarios no administradores.
  */
 public class UserConsole {
     
     private final UserService userService;
     
+    /**
+     * Constructor de la consola de usuario regular
+     * 
+     * @param userService Servicio de usuario para acceder a funcionalidades
+     * 
+     * Notas:
+     * - Establece la dependencia del servicio de usuario
+     * - Permite acceso a todas las funcionalidades de usuario regular
+     */
     public UserConsole(UserService userService) {
         this.userService = userService;
     }
     
     /**
-     * Shows the main user menu
+     * Muestra el menú principal del usuario
+     * 
+     * Características:
+     * - Bucle principal de navegación para usuarios regulares
+     * - Menú con opciones organizadas por categorías
+     * - Navegación fluida entre diferentes funcionalidades
+     * - Opción de salida integrada
      */
     public void showUserMenu() {
         boolean running = true;
@@ -54,7 +91,14 @@ public class UserConsole {
     }
     
     /**
-     * Shows the vehicle management menu
+     * Muestra el menú de gestión de vehículos
+     * 
+     * Funcionalidades disponibles:
+     * - Listar vehículos personales
+     * - Agregar nuevos vehículos
+     * - Eliminar vehículos existentes
+     * - Establecer vehículo favorito
+     * - Ver información del vehículo favorito
      */
     private void showVehicleManagementMenu() {
         boolean running = true;
@@ -81,7 +125,12 @@ public class UserConsole {
     }
     
     /**
-     * Shows the route planning menu
+     * Muestra el menú de planificación de rutas
+     * 
+     * Funcionalidades disponibles:
+     * - Buscar rutas con vehículo favorito
+     * - Buscar rutas con vehículo específico
+     * - Ver todas las ciudades disponibles
      */
     private void showRoutePlanningMenu() {
         boolean running = true;
@@ -104,7 +153,12 @@ public class UserConsole {
     }
     
     /**
-     * Shows the browsing menu
+     * Muestra el menú de exploración de ciudades y estaciones
+     * 
+     * Funcionalidades disponibles:
+     * - Ver todas las ciudades del sistema
+     * - Ver estaciones en una ciudad específica
+     * - Buscar estaciones compatibles con vehículos
      */
     private void showBrowsingMenu() {
         boolean running = true;
@@ -127,7 +181,12 @@ public class UserConsole {
     }
     
     /**
-     * Shows the profile menu
+     * Muestra el menú de perfil personal
+     * 
+     * Información mostrada:
+     * - Número total de vehículos del usuario
+     * - Vehículo favorito actual (si está configurado)
+     * - Resumen de la flota personal
      */
     private void showProfileMenu() {
         System.out.println("\n👤 My Profile");
@@ -141,8 +200,17 @@ public class UserConsole {
         MenuUtil.pause("Profile information displayed.");
     }
     
-    // ========== VEHICLE MANAGEMENT IMPLEMENTATIONS ==========
+    // ========== IMPLEMENTACIONES DE GESTIÓN DE VEHÍCULOS ==========
     
+    /**
+     * Lista todos los vehículos del usuario actual
+     * 
+     * Características:
+     * - Muestra información detallada de cada vehículo
+     * - Indica el vehículo favorito con icono especial
+     * - Incluye información específica por tipo de vehículo
+     * - Maneja casos de usuario sin vehículos
+     */
     private void listMyVehicles() {
         List<Vehicle> vehicles = userService.getVehicleService().getCurrentUserVehicles();
         
@@ -177,6 +245,16 @@ public class UserConsole {
         MenuUtil.pause("Vehicle list displayed.");
     }
     
+    /**
+     * Permite al usuario agregar un nuevo vehículo
+     * 
+     * Proceso:
+     * - Solicita información básica del vehículo
+     * - Permite seleccionar tipo (combustible o eléctrico)
+     * - Solicita información específica según el tipo
+     * - Agrega el vehículo a la flota personal
+     * - Maneja errores de entrada
+     */
     private void addNewVehicle() {
         System.out.println("\n➕ Add New Vehicle");
         
@@ -212,6 +290,20 @@ public class UserConsole {
         }
     }
     
+    /**
+     * Crea un vehículo de combustible con información específica
+     * 
+     * @param make Marca del vehículo
+     * @param model Modelo del vehículo
+     * @param year Año del vehículo
+     * @param licensePlate Placa del vehículo
+     * @return El vehículo de combustible creado, o null si hay error
+     * 
+     * Proceso:
+     * - Solicita capacidad del tanque
+     * - Permite seleccionar tipo de combustible
+     * - Crea y retorna el vehículo configurado
+     */
     private FuelVehicle createFuelVehicle(String make, String model, int year, String licensePlate) {
         // For simplicity, we'll use a basic fuel type
         // In a full implementation, you'd let the user choose from available fuel types
@@ -221,6 +313,20 @@ public class UserConsole {
         return new FuelVehicle(make, model, year, licensePlate, regularFuel, tankCapacity);
     }
     
+    /**
+     * Crea un vehículo eléctrico con información específica
+     * 
+     * @param make Marca del vehículo
+     * @param model Modelo del vehículo
+     * @param year Año del vehículo
+     * @param licensePlate Placa del vehículo
+     * @return El vehículo eléctrico creado, o null si hay error
+     * 
+     * Proceso:
+     * - Solicita capacidad de batería
+     * - Permite seleccionar tipos de cargadores compatibles
+     * - Crea y retorna el vehículo configurado
+     */
     private ElectricVehicle createElectricVehicle(String make, String model, int year, String licensePlate) {
         double batteryCapacity = MenuUtil.getDoubleInput("Battery Capacity (kWh): ");
         
@@ -232,6 +338,15 @@ public class UserConsole {
         return new ElectricVehicle(make, model, year, licensePlate, chargers, batteryCapacity);
     }
     
+    /**
+     * Permite al usuario eliminar un vehículo de su flota
+     * 
+     * Proceso:
+     * - Lista los vehículos disponibles
+     * - Permite seleccionar el vehículo a eliminar
+     * - Solicita confirmación antes de eliminar
+     * - Maneja la eliminación del vehículo favorito si es necesario
+     */
     private void removeVehicle() {
         List<Vehicle> vehicles = userService.getVehicleService().getCurrentUserVehicles();
         
@@ -264,6 +379,15 @@ public class UserConsole {
         }
     }
     
+    /**
+     * Permite al usuario establecer un vehículo favorito
+     * 
+     * Proceso:
+     * - Lista los vehículos disponibles
+     * - Permite seleccionar el nuevo vehículo favorito
+     * - Actualiza la configuración del usuario
+     * - Confirma el cambio exitoso
+     */
     private void setFavoriteVehicle() {
         List<Vehicle> vehicles = userService.getVehicleService().getCurrentUserVehicles();
         
@@ -299,6 +423,14 @@ public class UserConsole {
         }
     }
     
+    /**
+     * Muestra información detallada del vehículo favorito actual
+     * 
+     * Información mostrada:
+     * - Detalles completos del vehículo favorito
+     * - Información específica según el tipo de vehículo
+     * - Mensaje informativo si no hay vehículo favorito configurado
+     */
     private void viewFavoriteVehicle() {
         Vehicle favorite = userService.getVehicleService().getCurrentUserFavoriteVehicle();
         
@@ -327,8 +459,19 @@ public class UserConsole {
         MenuUtil.pause("Favorite vehicle information displayed.");
     }
     
-    // ========== ROUTE PLANNING IMPLEMENTATIONS ==========
+    // ========== IMPLEMENTACIONES DE PLANIFICACIÓN DE RUTAS ==========
     
+    /**
+     * Busca rutas entre ciudades con un vehículo específico
+     * 
+     * @param specificVehicle Vehículo específico para la búsqueda, o null para usar favorito
+     * 
+     * Proceso:
+     * - Solicita ciudades de origen y destino
+     * - Busca rutas disponibles
+     * - Muestra información detallada de cada ruta
+     * - Incluye estaciones compatibles si hay vehículo seleccionado
+     */
     private void findRoutes(Vehicle specificVehicle) {
         List<City> cities = userService.getRouteSearchService().getAllCities();
         
@@ -391,6 +534,14 @@ public class UserConsole {
         MenuUtil.pause("Route planning completed.");
     }
     
+    /**
+     * Busca rutas con un vehículo específico seleccionado por el usuario
+     * 
+     * Proceso:
+     * - Permite seleccionar un vehículo específico de la flota
+     * - Busca rutas con el vehículo seleccionado
+     * - Muestra información detallada incluyendo estaciones compatibles
+     */
     private void findRoutesWithVehicle() {
         List<Vehicle> vehicles = userService.getVehicleService().getCurrentUserVehicles();
         
@@ -414,6 +565,14 @@ public class UserConsole {
         findRoutes(selectedVehicle);
     }
     
+    /**
+     * Muestra todas las ciudades disponibles en el sistema
+     * 
+     * Información mostrada:
+     * - Lista completa de ciudades
+     * - Número total de ciudades
+     * - Información básica de cada ciudad
+     */
     private void viewAllCities() {
         List<City> cities = userService.getRouteSearchService().getAllCities();
         
@@ -434,8 +593,17 @@ public class UserConsole {
         MenuUtil.pause("City list displayed.");
     }
     
-    // ========== BROWSING IMPLEMENTATIONS ==========
+    // ========== IMPLEMENTACIONES DE EXPLORACIÓN ==========
     
+    /**
+     * Muestra las estaciones en una ciudad específica
+     * 
+     * Proceso:
+     * - Permite seleccionar una ciudad
+     * - Muestra todas las estaciones en esa ciudad
+     * - Incluye información detallada de cada estación
+     * - Maneja casos de ciudades sin estaciones
+     */
     private void viewStationsInCity() {
         List<City> cities = userService.getRouteSearchService().getAllCities();
         
@@ -475,6 +643,15 @@ public class UserConsole {
         MenuUtil.pause("Station list displayed.");
     }
     
+    /**
+     * Busca estaciones compatibles con los vehículos del usuario
+     * 
+     * Proceso:
+     * - Permite seleccionar un vehículo de la flota
+     * - Busca estaciones compatibles en todo el sistema
+     * - Muestra información detallada de estaciones compatibles
+     * - Maneja casos de vehículos sin estaciones compatibles
+     */
     private void searchCompatibleStations() {
         List<Vehicle> vehicles = userService.getVehicleService().getCurrentUserVehicles();
         

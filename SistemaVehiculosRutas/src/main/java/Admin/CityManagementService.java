@@ -1,6 +1,15 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * Nombre del Archivo: CityManagementService.java
+ * 
+ * Descripcion: Servicio que maneja todas las operaciones relacionadas con ciudades y conexiones
+ *              entre ellas. Proporciona funcionalidades para crear, actualizar, eliminar y
+ *              consultar ciudades, así como gestionar las conexiones entre ciudades.
+ * 
+ * Nombre de los Integrantes:
+ * Javier Lee Liang
+ * Paulo César Herrera Arias
+ * José Emilio Alvarado Mendez
+ * Josué Santiago Hidalgo Sandoval
  */
 package Admin;
 
@@ -16,23 +25,35 @@ import Models.City;
 import Models.Connection;
 
 /**
- *
- * @author JE
+ * Servicio de gestión de ciudades y conexiones
+ * 
+ * Esta clase proporciona métodos para administrar ciudades y sus conexiones,
+ * incluyendo operaciones CRUD completas y manejo de archivos corruptos.
  */
 public class CityManagementService {
     
     private final DataManager dataManager;
     
+    /**
+     * Constructor del servicio de gestión de ciudades
+     * 
+     * @param dataManager El gestor de datos para persistencia
+     */
     public CityManagementService(DataManager dataManager) {
         this.dataManager = dataManager;
     }
     
-    // ========== CITY MANAGEMENT ==========
+    // ========== GESTIÓN DE CIUDADES ==========
     
     /**
-     * Creates a new city
-     * @param city the city to create
-     * @return true if created successfully
+     * Crea una nueva ciudad en el sistema
+     * 
+     * @param city La ciudad a crear
+     * @return true si la ciudad se creó exitosamente, false en caso contrario
+     * 
+     * Restricciones:
+     * - La ciudad no puede ser null
+     * - No puede existir otra ciudad con el mismo nombre (ignorando mayúsculas/minúsculas)
      */
     public boolean createCity(City city) {
         if (city == null) {
@@ -42,12 +63,12 @@ public class CityManagementService {
         try {
             List<City> cities = dataManager.loadList(FileConstants.CITIES_FILE, City::new);
             
-            // Check for duplicate names
+            // Verificar nombres duplicados
             boolean nameExists = cities.stream()
                 .anyMatch(c -> city.getName().equalsIgnoreCase(c.getName()));
             
             if (nameExists) {
-                return false; // City name already exists
+                return false; // Ya existe una ciudad con ese nombre
             }
             
             cities.add(city);
@@ -61,10 +82,16 @@ public class CityManagementService {
     }
     
     /**
-     * Updates an existing city
-     * @param cityId the ID of the city to update
-     * @param updatedCity the updated city information
-     * @return true if updated successfully
+     * Actualiza una ciudad existente en el sistema
+     * 
+     * @param cityId El ID de la ciudad a actualizar
+     * @param updatedCity La información actualizada de la ciudad
+     * @return true si la ciudad se actualizó exitosamente, false en caso contrario
+     * 
+     * Restricciones:
+     * - El ID de la ciudad no puede ser null
+     * - La ciudad actualizada no puede ser null
+     * - La ciudad debe existir en el sistema
      */
     public boolean updateCity(String cityId, City updatedCity) {
         if (cityId == null || updatedCity == null) {
@@ -90,9 +117,15 @@ public class CityManagementService {
     }
     
     /**
-     * Deletes a city (only if no connections exist)
-     * @param cityId the ID of the city to delete
-     * @return true if deleted successfully
+     * Elimina una ciudad del sistema (solo si no tiene conexiones)
+     * 
+     * @param cityId El ID de la ciudad a eliminar
+     * @return true si la ciudad se eliminó exitosamente, false en caso contrario
+     * 
+     * Restricciones:
+     * - El ID de la ciudad no puede ser null
+     * - La ciudad no puede tener conexiones existentes
+     * - La ciudad debe existir en el sistema
      */
     public boolean deleteCity(String cityId) {
         if (cityId == null) {
@@ -100,16 +133,16 @@ public class CityManagementService {
         }
         
         try {
-            // Check for existing connections
+            // Verificar conexiones existentes
             List<Connection> connections = dataManager.loadList(FileConstants.CONNECTIONS_FILE, Connection::new);
             boolean hasConnections = connections.stream()
                 .anyMatch(conn -> cityId.equals(conn.getFromCityId()) || cityId.equals(conn.getToCityId()));
             
             if (hasConnections) {
-                return false; // Cannot delete city with existing connections
+                return false; // No se puede eliminar ciudad con conexiones existentes
             }
             
-            // Delete the city
+            // Eliminar la ciudad
             List<City> cities = dataManager.loadList(FileConstants.CITIES_FILE, City::new);
             boolean removed = cities.removeIf(city -> cityId.equals(city.getId()));
             
@@ -126,8 +159,9 @@ public class CityManagementService {
     }
     
     /**
-     * Gets all cities
-     * @return list of all cities
+     * Obtiene todas las ciudades del sistema
+     * 
+     * @return Lista de todas las ciudades
      */
     public List<City> getAllCities() {
         try {
@@ -139,9 +173,10 @@ public class CityManagementService {
     }
     
     /**
-     * Finds a city by ID
-     * @param cityId the city ID
-     * @return the city, or null if not found
+     * Busca una ciudad por su ID
+     * 
+     * @param cityId El ID de la ciudad a buscar
+     * @return La ciudad encontrada, o null si no existe
      */
     public City findCityById(String cityId) {
         return getAllCities().stream()
@@ -150,11 +185,19 @@ public class CityManagementService {
             .orElse(null);
     }
     
-    // ========== CONNECTION MANAGEMENT ==========
-      /**
-     * Creates a new connection between cities
-     * @param connection the connection to create
-     * @return true if created successfully
+    // ========== GESTIÓN DE CONEXIONES ==========
+    
+    /**
+     * Crea una nueva conexión entre ciudades
+     * 
+     * @param connection La conexión a crear
+     * @return true si la conexión se creó exitosamente, false en caso contrario
+     * 
+     * Restricciones:
+     * - La conexión no puede ser null
+     * - Las ciudades de origen y destino no pueden ser null
+     * - No puede existir una conexión idéntica entre las mismas ciudades
+     * - Maneja automáticamente archivos corruptos eliminándolos y creando nuevos
      */
     public boolean createConnection(Connection connection) {
         if (connection == null || connection.getFromCity() == null || connection.getToCity() == null) {
@@ -164,13 +207,13 @@ public class CityManagementService {
         try {
             List<Connection> connections;
             
-            // Check if connections file exists, if not create empty list
+            // Verificar si el archivo de conexiones existe, si no crear lista vacía
             if (dataManager.fileExists(FileConstants.CONNECTIONS_FILE)) {
                 try {
                     connections = dataManager.loadList(FileConstants.CONNECTIONS_FILE, Connection::new);
                     // System.out.println("Debug: Loaded " + connections.size() + " existing connections");
                 } catch (SerializationException e) {
-                    // File exists but is corrupted, delete it and create new
+                    // El archivo existe pero está corrupto, eliminarlo y crear nuevo
                     System.out.println("Debug: Connections file is corrupted, deleting and creating new");
                     dataManager.deleteFile(FileConstants.CONNECTIONS_FILE);
                     connections = new ArrayList<>();
@@ -180,7 +223,7 @@ public class CityManagementService {
                 // System.out.println("Debug: Connections file not found, creating new list");
             }
             
-            // Check for duplicate connections using city IDs (since city references may not be resolved)
+            // Verificar conexiones duplicadas usando IDs de ciudades
             String fromCityId = connection.getFromCity().getId();
             String toCityId = connection.getToCity().getId();
             
@@ -188,7 +231,7 @@ public class CityManagementService {
             
             boolean connectionExists = connections.stream()
                 .anyMatch(conn -> {
-                    // Use getFromCityId() and getToCityId() for unresolved connections
+                    // Usar getFromCityId() y getToCityId() para conexiones no resueltas
                     String connFromId = conn.getFromCity() != null ? conn.getFromCity().getId() : conn.getFromCityId();
                     String connToId = conn.getToCity() != null ? conn.getToCity().getId() : conn.getToCityId();
                     boolean matches = fromCityId.equals(connFromId) && toCityId.equals(connToId);
@@ -200,7 +243,7 @@ public class CityManagementService {
             
             if (connectionExists) {
                 // System.out.println("Debug: Connection already exists, returning false");
-                return false; // Connection already exists
+                return false; // La conexión ya existe
             }
             
             // System.out.println("Debug: Adding new connection to list");
@@ -216,11 +259,17 @@ public class CityManagementService {
     }
     
     /**
-     * Updates an existing connection
-     * @param fromCityId the from city ID
-     * @param toCityId the to city ID
-     * @param updatedConnection the updated connection information
-     * @return true if updated successfully
+     * Actualiza una conexión existente
+     * 
+     * @param fromCityId El ID de la ciudad de origen
+     * @param toCityId El ID de la ciudad de destino
+     * @param updatedConnection La información actualizada de la conexión
+     * @return true si la conexión se actualizó exitosamente, false en caso contrario
+     * 
+     * Restricciones:
+     * - Los IDs de las ciudades no pueden ser null
+     * - La conexión actualizada no puede ser null
+     * - La conexión debe existir en el sistema
      */
     public boolean updateConnection(String fromCityId, String toCityId, Connection updatedConnection) {
         if (fromCityId == null || toCityId == null || updatedConnection == null) {
@@ -231,11 +280,11 @@ public class CityManagementService {
             List<Connection> connections;
             List<City> cities = getAllCities();
             
-            // Check if connections file exists, if not return false
+            // Verificar si el archivo de conexiones existe, si no retornar false
             if (dataManager.fileExists(FileConstants.CONNECTIONS_FILE)) {
                 connections = dataManager.loadList(FileConstants.CONNECTIONS_FILE, Connection::new);
                 
-                // Resolve city references
+                // Resolver referencias de ciudades
                 Function<String, City> cityResolver = cityId -> 
                     cities.stream().filter(c -> cityId.equals(c.getId())).findFirst().orElse(null);
                 
@@ -243,7 +292,7 @@ public class CityManagementService {
                     conn.resolveCityReferences(cityResolver);
                 }
                 
-                // Find and update the connection
+                // Buscar y actualizar la conexión
                 for (int i = 0; i < connections.size(); i++) {
                     Connection conn = connections.get(i);
                     if (fromCityId.equals(conn.getFromCity() != null ? conn.getFromCity().getId() : conn.getFromCityId()) && 
@@ -254,7 +303,7 @@ public class CityManagementService {
                     }
                 }
             } else {
-                System.out.println("Debug: Connections file not found, nothing to update");
+                // System.out.println("Debug: Connections file not found, nothing to update");
             }
             
         } catch (SerializationException e) {
@@ -265,10 +314,15 @@ public class CityManagementService {
     }
     
     /**
-     * Deletes a connection
-     * @param fromCityId the from city ID
-     * @param toCityId the to city ID
-     * @return true if deleted successfully
+     * Elimina una conexión del sistema
+     * 
+     * @param fromCityId El ID de la ciudad de origen
+     * @param toCityId El ID de la ciudad de destino
+     * @return true si la conexión se eliminó exitosamente, false en caso contrario
+     * 
+     * Restricciones:
+     * - Los IDs de las ciudades no pueden ser null
+     * - La conexión debe existir en el sistema
      */
     public boolean deleteConnection(String fromCityId, String toCityId) {
         if (fromCityId == null || toCityId == null) {
@@ -280,11 +334,11 @@ public class CityManagementService {
             List<Connection> connections;
             List<City> cities = getAllCities();
             
-            // Check if connections file exists, if not return false
+            // Verificar si el archivo de conexiones existe, si no retornar false
             if (dataManager.fileExists(FileConstants.CONNECTIONS_FILE)) {
                 connections = dataManager.loadList(FileConstants.CONNECTIONS_FILE, Connection::new);
                 
-                // First migrate connections to ensure they have proper city IDs
+                // Primero migrar conexiones para asegurar que tengan IDs de ciudades apropiados
                 migrateConnections(connections, cities);
                 
                 // System.out.println("Debug: Attempting to delete connection from " + fromCityId + " to " + toCityId);
@@ -316,20 +370,25 @@ public class CityManagementService {
     }
     
     /**
-     * Gets all connections
-     * @return list of all connections
+     * Obtiene todas las conexiones del sistema
+     * 
+     * @return Lista de todas las conexiones
+     * 
+     * Notas:
+     * - Maneja automáticamente archivos corruptos eliminándolos y retornando lista vacía
+     * - Migra conexiones para asegurar que tengan referencias de ciudades apropiadas
      */
     public List<Connection> getAllConnections() {
         try {
             List<Connection> connections;
             List<City> cities = getAllCities();
             
-            // Check if connections file exists, if not return empty list
+            // Verificar si el archivo de conexiones existe, si no retornar lista vacía
             if (dataManager.fileExists(FileConstants.CONNECTIONS_FILE)) {
                 connections = dataManager.loadList(FileConstants.CONNECTIONS_FILE, Connection::new);
                 // System.out.println("Debug: Loaded " + connections.size() + " connections and " + cities.size() + " cities");
                 
-                // Check for corrupted connections and log them
+                // Verificar conexiones corruptas y registrarlas
                 long corruptedCount = connections.stream()
                     .filter(conn -> conn.getFromCityId() == null || conn.getToCityId() == null)
                     .count();
@@ -339,7 +398,7 @@ public class CityManagementService {
                     System.out.println("Debug: Use 'Fix Corrupted Connections' option to resolve this issue");
                 }
                 
-                // Migrate connections to ensure they have proper city IDs
+                // Migrar conexiones para asegurar que tengan IDs de ciudades apropiados
                 migrateConnections(connections, cities);
             } else {
                 connections = new ArrayList<>();
@@ -349,7 +408,7 @@ public class CityManagementService {
             return connections;
             
         } catch (SerializationException e) {
-            // File exists but is corrupted, delete it and return empty list
+            // El archivo existe pero está corrupto, eliminarlo y retornar lista vacía
             System.out.println("Debug: Connections file is corrupted, deleting and returning empty list");
             dataManager.deleteFile(FileConstants.CONNECTIONS_FILE);
             System.err.println("Error loading connections: " + e.getMessage());
@@ -358,7 +417,14 @@ public class CityManagementService {
     }
     
     /**
-     * Migrates existing connections to ensure they have proper city IDs stored
+     * Migra conexiones existentes para asegurar que tengan IDs de ciudades apropiados almacenados
+     * 
+     * @param connections Lista de conexiones a migrar
+     * @param cities Lista de ciudades disponibles para resolver referencias
+     * 
+     * Notas:
+     * - Resuelve referencias de ciudades que están null
+     * - Guarda automáticamente si se realizan cambios
      */
     private void migrateConnections(List<Connection> connections, List<City> cities) {
         Function<String, City> cityResolver = cityId -> 
@@ -366,7 +432,7 @@ public class CityManagementService {
         
         boolean needsSave = false;
         for (Connection conn : connections) {
-            // If city IDs exist but city references are null, resolve them
+            // Si los IDs de ciudades existen pero las referencias de ciudades son null, resolverlas
             if (conn.getFromCityId() != null && conn.getFromCity() == null) {
                 City fromCity = cityResolver.apply(conn.getFromCityId());
                 if (fromCity != null) {
@@ -382,7 +448,7 @@ public class CityManagementService {
                 }
             }
             
-            // Also resolve any remaining null references
+            // También resolver cualquier referencia null restante
             conn.resolveCityReferences(cityResolver);
         }
         
@@ -397,9 +463,10 @@ public class CityManagementService {
     }
     
     /**
-     * Gets connections from a specific city
-     * @param cityId the city ID
-     * @return list of connections from the city
+     * Obtiene las conexiones que salen de una ciudad específica
+     * 
+     * @param cityId El ID de la ciudad
+     * @return Lista de conexiones que salen de la ciudad
      */
     public List<Connection> getConnectionsFromCity(String cityId) {
         return getAllConnections().stream()
@@ -408,9 +475,10 @@ public class CityManagementService {
     }
     
     /**
-     * Gets connections to a specific city
-     * @param cityId the city ID
-     * @return list of connections to the city
+     * Obtiene las conexiones que llegan a una ciudad específica
+     * 
+     * @param cityId El ID de la ciudad
+     * @return Lista de conexiones que llegan a la ciudad
      */
     public List<Connection> getConnectionsToCity(String cityId) {
         return getAllConnections().stream()
@@ -419,9 +487,14 @@ public class CityManagementService {
     }
     
     /**
-     * Fixes corrupted connections by recreating them with proper city IDs
-     * This method should be called if connections have null city IDs
-     * @return true if connections were fixed successfully
+     * Repara conexiones corruptas recreándolas con IDs de ciudades apropiados
+     * Este método debe ser llamado si las conexiones tienen IDs de ciudades null
+     * 
+     * @return true si las conexiones se repararon exitosamente, false en caso contrario
+     * 
+     * Restricciones:
+     * - Debe haber al menos 6 ciudades en el sistema para recrear las conexiones por defecto
+     * - Elimina y recrea todas las conexiones existentes
      */
     public boolean fixCorruptedConnections() {
         try {
@@ -434,10 +507,10 @@ public class CityManagementService {
             
             // System.out.println("Debug: Recreating default connections...");
             
-            // Delete existing connections file
+            // Eliminar archivo de conexiones existente
             dataManager.deleteFile(FileConstants.CONNECTIONS_FILE);
             
-            // Recreate default connections
+            // Recrear conexiones por defecto
             City sanJose = cities.get(0);
             City cartago = cities.get(1);
             City alajuela = cities.get(2);

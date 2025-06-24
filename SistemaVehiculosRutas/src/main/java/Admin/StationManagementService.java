@@ -1,8 +1,21 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * Nombre del Archivo: StationManagementService.java
+ * 
+ * Descripcion: Servicio de gestión de estaciones y tipos de energía del sistema.
+ *              Proporciona funcionalidades para administrar tipos de combustible,
+ *              tipos de cargadores eléctricos y estaciones asociadas a ciudades.
+ *              Incluye operaciones CRUD completas para todos los tipos de energía.
+ * 
+ * Nombre de los Integrantes:
+ * Javier Lee Liang
+ * Paulo César Herrera Arias
+ * José Emilio Alvarado Mendez
+ * Josué Santiago Hidalgo Sandoval
  */
 package Admin;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import Binary.FileConstants;
 import Interfaces.DataManager;
@@ -11,27 +24,42 @@ import Models.City;
 import Models.Station;
 import Vehicle.ChargerType;
 import Vehicle.FuelType;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
- *
- * @author JE
+ * Servicio de gestión de estaciones y tipos de energía
+ * 
+ * Esta clase proporciona funcionalidades completas para la administración de:
+ * - Tipos de combustible (gasolina, diesel, etc.)
+ * - Tipos de cargadores eléctricos (rápido, lento, etc.)
+ * - Estaciones asociadas a ciudades específicas
+ * 
+ * Todas las operaciones incluyen validación de datos y manejo de errores.
  */
 public class StationManagementService {
     
     private final DataManager dataManager;
     
+    /**
+     * Constructor del servicio de gestión de estaciones
+     * 
+     * @param dataManager Gestor de datos para operaciones de persistencia
+     */
     public StationManagementService(DataManager dataManager) {
         this.dataManager = dataManager;
     }
     
-    // ========== FUEL TYPE MANAGEMENT ==========
+    // ========== GESTIÓN DE TIPOS DE COMBUSTIBLE ==========
     
     /**
-     * Creates a new fuel type
-     * @param fuelType the fuel type to create
-     * @return true if created successfully
+     * Crea un nuevo tipo de combustible en el sistema
+     * 
+     * @param fuelType El tipo de combustible a crear
+     * @return true si se creó exitosamente, false en caso contrario
+     * 
+     * Restricciones:
+     * - El tipo de combustible no puede ser null
+     * - No se permiten IDs duplicados
+     * - Se valida la integridad de los datos antes de guardar
      */
     public boolean createFuelType(FuelType fuelType) {
         if (fuelType == null) {
@@ -41,7 +69,7 @@ public class StationManagementService {
         try {
             List<FuelType> fuelTypes = dataManager.loadList(FileConstants.FUEL_TYPES_FILE, FuelType::new);
             
-            // Check for duplicate IDs
+            // Verificar IDs duplicados
             boolean idExists = fuelTypes.stream()
                 .anyMatch(ft -> fuelType.getId().equals(ft.getId()));
             
@@ -60,10 +88,16 @@ public class StationManagementService {
     }
     
     /**
-     * Updates an existing fuel type
-     * @param fuelTypeId the ID of the fuel type to update
-     * @param updatedFuelType the updated fuel type information
-     * @return true if updated successfully
+     * Actualiza un tipo de combustible existente
+     * 
+     * @param fuelTypeId El ID del tipo de combustible a actualizar
+     * @param updatedFuelType La información actualizada del tipo de combustible
+     * @return true si se actualizó exitosamente, false en caso contrario
+     * 
+     * Notas:
+     * - Busca el tipo de combustible por ID
+     * - Reemplaza completamente la información existente
+     * - Mantiene la integridad de los datos
      */
     public boolean updateFuelType(String fuelTypeId, FuelType updatedFuelType) {
         if (fuelTypeId == null || updatedFuelType == null) {
@@ -89,9 +123,15 @@ public class StationManagementService {
     }
     
     /**
-     * Deletes a fuel type
-     * @param fuelTypeId the ID of the fuel type to delete
-     * @return true if deleted successfully
+     * Elimina un tipo de combustible del sistema
+     * 
+     * @param fuelTypeId El ID del tipo de combustible a eliminar
+     * @return true si se eliminó exitosamente, false en caso contrario
+     * 
+     * Notas:
+     * - Busca y elimina el tipo de combustible por ID
+     * - Actualiza la persistencia de datos
+     * - Maneja errores de serialización
      */
     public boolean deleteFuelType(String fuelTypeId) {
         if (fuelTypeId == null) {
@@ -114,12 +154,18 @@ public class StationManagementService {
         return false;
     }
     
-    // ========== CHARGER TYPE MANAGEMENT ==========
+    // ========== GESTIÓN DE TIPOS DE CARGADORES ==========
     
     /**
-     * Creates a new charger type
-     * @param chargerType the charger type to create
-     * @return true if created successfully
+     * Crea un nuevo tipo de cargador eléctrico en el sistema
+     * 
+     * @param chargerType El tipo de cargador a crear
+     * @return true si se creó exitosamente, false en caso contrario
+     * 
+     * Restricciones:
+     * - El tipo de cargador no puede ser null
+     * - No se permiten IDs duplicados
+     * - Se valida la integridad de los datos antes de guardar
      */
     public boolean createChargerType(ChargerType chargerType) {
         if (chargerType == null) {
@@ -129,7 +175,7 @@ public class StationManagementService {
         try {
             List<ChargerType> chargerTypes = dataManager.loadList(FileConstants.CHARGER_TYPES_FILE, ChargerType::new);
             
-            // Check for duplicate IDs
+            // Verificar IDs duplicados
             boolean idExists = chargerTypes.stream()
                 .anyMatch(ct -> chargerType.getId().equals(ct.getId()));
             
@@ -148,10 +194,16 @@ public class StationManagementService {
     }
     
     /**
-     * Updates an existing charger type
-     * @param chargerTypeId the ID of the charger type to update
-     * @param updatedChargerType the updated charger type information
-     * @return true if updated successfully
+     * Actualiza un tipo de cargador eléctrico existente
+     * 
+     * @param chargerTypeId El ID del tipo de cargador a actualizar
+     * @param updatedChargerType La información actualizada del tipo de cargador
+     * @return true si se actualizó exitosamente, false en caso contrario
+     * 
+     * Notas:
+     * - Busca el tipo de cargador por ID
+     * - Reemplaza completamente la información existente
+     * - Mantiene la integridad de los datos
      */
     public boolean updateChargerType(String chargerTypeId, ChargerType updatedChargerType) {
         if (chargerTypeId == null || updatedChargerType == null) {
@@ -177,9 +229,15 @@ public class StationManagementService {
     }
     
     /**
-     * Deletes a charger type
-     * @param chargerTypeId the ID of the charger type to delete
-     * @return true if deleted successfully
+     * Elimina un tipo de cargador eléctrico del sistema
+     * 
+     * @param chargerTypeId El ID del tipo de cargador a eliminar
+     * @return true si se eliminó exitosamente, false en caso contrario
+     * 
+     * Notas:
+     * - Busca y elimina el tipo de cargador por ID
+     * - Actualiza la persistencia de datos
+     * - Maneja errores de serialización
      */
     public boolean deleteChargerType(String chargerTypeId) {
         if (chargerTypeId == null) {
@@ -202,13 +260,19 @@ public class StationManagementService {
         return false;
     }
     
-    // ========== STATION MANAGEMENT ==========
+    // ========== GESTIÓN DE ESTACIONES ==========
     
     /**
-     * Adds a station to a city
-     * @param cityId the city ID
-     * @param station the station to add
-     * @return true if added successfully
+     * Agrega una estación a una ciudad específica
+     * 
+     * @param cityId El ID de la ciudad donde agregar la estación
+     * @param station La estación a agregar
+     * @return true si se agregó exitosamente, false en caso contrario
+     * 
+     * Notas:
+     * - Busca la ciudad por ID
+     * - Agrega la estación a la lista de estaciones de la ciudad
+     * - Actualiza la persistencia de datos
      */
     public boolean addStationToCity(String cityId, Station station) {
         if (cityId == null || station == null) {
@@ -234,10 +298,16 @@ public class StationManagementService {
     }
     
     /**
-     * Removes a station from a city
-     * @param cityId the city ID
-     * @param stationId the station ID
-     * @return true if removed successfully
+     * Elimina una estación de una ciudad específica
+     * 
+     * @param cityId El ID de la ciudad de donde eliminar la estación
+     * @param stationId El ID de la estación a eliminar
+     * @return true si se eliminó exitosamente, false en caso contrario
+     * 
+     * Notas:
+     * - Busca la ciudad por ID
+     * - Elimina la estación de la lista de estaciones de la ciudad
+     * - Actualiza la persistencia de datos
      */
     public boolean removeStationFromCity(String cityId, String stationId) {
         if (cityId == null || stationId == null) {
@@ -265,8 +335,13 @@ public class StationManagementService {
     }
     
     /**
-     * Gets all fuel types
-     * @return list of all fuel types
+     * Obtiene todos los tipos de combustible del sistema
+     * 
+     * @return Lista de todos los tipos de combustible disponibles
+     * 
+     * Notas:
+     * - Retorna una lista vacía si hay errores de carga
+     * - Maneja errores de serialización
      */
     public List<FuelType> getAllFuelTypes() {
         try {
@@ -278,8 +353,13 @@ public class StationManagementService {
     }
     
     /**
-     * Gets all charger types
-     * @return list of all charger types
+     * Obtiene todos los tipos de cargadores eléctricos del sistema
+     * 
+     * @return Lista de todos los tipos de cargadores disponibles
+     * 
+     * Notas:
+     * - Retorna una lista vacía si hay errores de carga
+     * - Maneja errores de serialización
      */
     public List<ChargerType> getAllChargerTypes() {
         try {
