@@ -343,17 +343,17 @@ public class AdminConsole {
         Connection connToDelete = connections.get(index);
         
         // Add detailed debugging
-        System.out.println("Debug: Connection details:");
-        System.out.println("  From City: " + (connToDelete.getFromCity() != null ? connToDelete.getFromCity().getName() : "null"));
-        System.out.println("  From City ID: " + connToDelete.getFromCityId());
-        System.out.println("  To City: " + (connToDelete.getToCity() != null ? connToDelete.getToCity().getName() : "null"));
-        System.out.println("  To City ID: " + connToDelete.getToCityId());
+        // System.out.println("Debug: Connection details:");
+        // System.out.println("  From City: " + (connToDelete.getFromCity() != null ? connToDelete.getFromCity().getName() : "null"));
+        // System.out.println("  From City ID: " + connToDelete.getFromCityId());
+        // System.out.println("  To City: " + (connToDelete.getToCity() != null ? connToDelete.getToCity().getName() : "null"));
+        // System.out.println("  To City ID: " + connToDelete.getToCityId());
         
         String fromId = connToDelete.getFromCity() != null ? connToDelete.getFromCity().getId() : connToDelete.getFromCityId();
         String toId = connToDelete.getToCity() != null ? connToDelete.getToCity().getId() : connToDelete.getToCityId();
         
-        System.out.println("Debug: Attempting to delete connection with IDs: " + fromId + " -> " + toId);
-        System.out.println("Debug: Connection object: " + connToDelete);
+        // System.out.println("Debug: Attempting to delete connection with IDs: " + fromId + " -> " + toId);
+        // System.out.println("Debug: Connection object: " + connToDelete);
         
         if (!MenuUtil.getConfirmation("Are you sure you want to delete this connection?")) {
             return;
