@@ -127,19 +127,6 @@ public class AdjacencyMatrixGraph<T extends Node> implements Graph<T> {
      * @param edge Arista a agregar al grafo
      * @return true si la arista fue agregada exitosamente, false en caso contrario
      * 
-     * Proceso:
-     * - Valida que la arista no sea null
-     * - Verifica que la arista no exista ya en el grafo
-     * - Obtiene los índices de los nodos origen y destino
-     * - Verifica que ambos nodos existan en el grafo
-     * - Agrega la arista a la lista de aristas
-     * - Actualiza la matriz de adyacencia con el peso
-     * 
-     * Validaciones:
-     * - Arista no puede ser null
-     * - Arista no debe existir ya en el grafo
-     * - Ambos nodos (origen y destino) deben existir en el grafo
-     * 
      * Notas:
      * - El peso se almacena en la matriz de adyacencia
      * - La arista se agrega a la lista para acceso directo
@@ -222,17 +209,6 @@ public class AdjacencyMatrixGraph<T extends Node> implements Graph<T> {
      * @param to Nodo de destino
      * @return Lista de nodos que forman la ruta más corta, o lista vacía si no hay ruta
      * 
-     * Proceso:
-     * - Valida que ambos nodos no sean null
-     * - Obtiene los índices de los nodos en el grafo
-     * - Verifica que ambos nodos existan en el grafo
-     * - Ejecuta el algoritmo de Dijkstra
-     * - Reconstruye la ruta desde el resultado
-     * 
-     * Validaciones:
-     * - Ambos nodos deben existir en el grafo
-     * - Si no hay ruta, retorna lista vacía
-     * 
      * Notas:
      * - Utiliza el algoritmo de Dijkstra para ruta más corta
      * - El peso de las aristas determina la "distancia"
@@ -260,18 +236,6 @@ public class AdjacencyMatrixGraph<T extends Node> implements Graph<T> {
      * @param fromIndex Índice del nodo de origen
      * @param toIndex Índice del nodo de destino
      * @return Lista de nodos que forman la ruta más corta
-     * 
-     * Algoritmo:
-     * 1. Inicializa arrays de distancias, nodos anteriores y visitados
-     * 2. Establece distancia del origen a 0, resto a infinito
-     * 3. Usa cola de prioridad para obtener nodo con menor distancia
-     * 4. Para cada nodo, explora todos sus vecinos no visitados
-     * 5. Actualiza distancias si encuentra una ruta más corta
-     * 6. Reconstruye la ruta desde el nodo de destino
-     * 
-     * Complejidad:
-     * - Tiempo: O((V + E) log V) donde V = nodos, E = aristas
-     * - Espacio: O(V) para arrays auxiliares
      * 
      * Notas:
      * - Usa cola de prioridad para eficiencia
