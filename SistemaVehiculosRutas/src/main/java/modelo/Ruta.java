@@ -8,6 +8,9 @@ package modelo;
  *
  * @author javie
  */
-public class UsuarioRegular {
-    
+public class Ruta {
+    private Ciudad origen;
+    private Ciudad destino;
+    private double kilometros;
+    private double minutos;
 }

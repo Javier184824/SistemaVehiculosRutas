@@ -10,24 +10,22 @@ import java.io.Serializable;
  *
  * @author javie
  */
-public class Admin extends Usuario implements Serializable {
+public class Regular extends Usuario implements Serializable {
     
-    public Admin() {
+    public Regular() {
         super();
     }
     
-    public Admin(String nombre) {
+    public Regular(String nombre) {
         super(nombre);
     }
     
-    public Admin(String nombre, String correo, String contrasenia) {
+    public Regular(String nombre, String correo, String contrasenia) {
         super(nombre, correo, contrasenia);
     }
-
+    
     @Override
     public String toString() {
-        return "Admin{" + super.toString() + '}';
+        return "Regular{" + super.toString() + '}';
     }
-    
-    
 }
