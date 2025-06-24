@@ -121,14 +121,12 @@ public class InicioSesion extends javax.swing.JFrame {
 
     private void iniciarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iniciarButtonActionPerformed
         this.dispose();
-        String[] args = {};
-        MenuUsarioRegular.main(args);
+        new MenuUsarioRegular().setVisible(true);
     }//GEN-LAST:event_iniciarButtonActionPerformed
 
     private void crearCuentaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearCuentaButtonActionPerformed
         this.dispose();
-        String[] args = {};
-        CrearCuenta.main(args);
+        new CrearCuenta().setVisible(true);
     }//GEN-LAST:event_crearCuentaButtonActionPerformed
 
     /**
