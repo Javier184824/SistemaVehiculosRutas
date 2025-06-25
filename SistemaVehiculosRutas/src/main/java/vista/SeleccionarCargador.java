@@ -13,11 +13,13 @@ import Main.RouteSystemContext;
 public class SeleccionarCargador extends javax.swing.JFrame {
     
     private RouteSystemContext context;
+    private javax.swing.JFrame menuAdmin;
     /**
      * Creates new form SeleccionarCargador
      */
-    public SeleccionarCargador(RouteSystemContext context) {
+    public SeleccionarCargador(RouteSystemContext context, javax.swing.JFrame menuAdmin) {
         this.context = context;
+        this.menuAdmin = menuAdmin;
         initComponents();
     }
 
@@ -36,16 +38,10 @@ public class SeleccionarCargador extends javax.swing.JFrame {
         listoButton = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosed(java.awt.event.WindowEvent evt) {
-                SeleccionarCargador.this.windowClosed(evt);
-            }
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 SeleccionarCargador.this.windowClosing(evt);
-            }
-            public void windowDeactivated(java.awt.event.WindowEvent evt) {
-                SeleccionarCargador.this.windowDeactivated(evt);
             }
         });
 
@@ -59,11 +55,16 @@ public class SeleccionarCargador extends javax.swing.JFrame {
         ));
         cargadoresScrollPane.setViewportView(cargadoresTable);
 
-        getContentPane().add(cargadoresScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 650, 290));
-
         editarButton.setText("Editar tipos de cargador");
 
         listoButton.setText("Listo");
+        listoButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listoButtonActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Listo");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -93,24 +94,17 @@ public class SeleccionarCargador extends javax.swing.JFrame {
                 .addContainerGap(97, Short.MAX_VALUE))
         );
 
-        jButton1.setText("Listo");
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 340, 420, 30));
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void windowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowClosing
-        MenuAdmin menuAdmin = new MenuAdmin(context);
-        menuAdmin.setVisible(true);
+        menuAdmin.setEnabled(true);
     }//GEN-LAST:event_windowClosing
 
-    private void windowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowClosed
-        
-    }//GEN-LAST:event_windowClosed
-
-    private void windowDeactivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowDeactivated
-        
-    }//GEN-LAST:event_windowDeactivated
+    private void listoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listoButtonActionPerformed
+        this.dispose();
+        menuAdmin.setEnabled(true);
+    }//GEN-LAST:event_listoButtonActionPerformed
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
