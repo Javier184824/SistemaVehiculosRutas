@@ -8,8 +8,10 @@ import Admin.AdminService;
 import Admin.UserManagementService;
 import Main.RouteSystemContext;
 import User.User;
+import User.UserRole;
 import User.UserService;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -19,22 +21,145 @@ import javax.swing.table.DefaultTableModel;
 public class MenuAdmin extends javax.swing.JFrame {
     
     private RouteSystemContext context;
+    
     /**
      * Creates new form MenuAdmin
      */
     public MenuAdmin(RouteSystemContext context) {
         this.context = context;
         initComponents();
+        configurarTablaUsuarios();
+        cargarUsuarios();
     }
     
-    public void iniciarTablaUsuarios() {
+    /**
+     * Configura la tabla de usuarios con las columnas apropiadas
+     */
+    private void configurarTablaUsuarios() {
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Usuario");
+        model.addColumn("Rol");
+        model.addColumn("Vehículos");
+        usuariosTable.setModel(model);
+        
+        // Hacer que la tabla no sea editable
+        usuariosTable.setDefaultEditor(Object.class, null);
+    }
+    
+    /**
+     * Carga todos los usuarios en la tabla
+     */
+    public void cargarUsuarios() {
+        try {
+            UserManagementService servicioManejoUsuarios = context.getAdminService().getUserManager();
+            List<User> usuarios = servicioManejoUsuarios.getAllUsers();
+            
+            DefaultTableModel tablaContenido = (DefaultTableModel) usuariosTable.getModel();
+            tablaContenido.setRowCount(0); // Limpiar tabla
+            
+            for (User usuario : usuarios) {
+                tablaContenido.addRow(new Object[] {
+                    usuario.getUsername(),
+                    usuario.getRole().getDisplayName(),
+                    usuario.getVehicles().size()
+                });
+            }
+            
+            // Actualizar el estado del botón eliminar
+            actualizarEstadoBotonEliminar();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, 
+                "Error al cargar usuarios: " + e.getMessage(), 
+                "Error", 
+                JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    /**
+     * Actualiza el estado del botón eliminar según si hay usuarios seleccionados
+     */
+    private void actualizarEstadoBotonEliminar() {
+        int filaSeleccionada = usuariosTable.getSelectedRow();
+        eliminarUsuarioButton.setEnabled(filaSeleccionada >= 0);
+    }
+    
+    /**
+     * Elimina el usuario seleccionado
+     */
+    private void eliminarUsuarioSeleccionado() {
+        int filaSeleccionada = usuariosTable.getSelectedRow();
+        
+        if (filaSeleccionada < 0) {
+            JOptionPane.showMessageDialog(this, 
+                "Por favor seleccione un usuario para eliminar", 
+                "Advertencia", 
+                JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        // Obtener el nombre del usuario seleccionado
+        String nombreUsuario = (String) usuariosTable.getValueAt(filaSeleccionada, 0);
+        
+        // Buscar el usuario por nombre para obtener su ID
         UserManagementService servicioManejoUsuarios = context.getAdminService().getUserManager();
         List<User> usuarios = servicioManejoUsuarios.getAllUsers();
-        DefaultTableModel tablaContenido = (DefaultTableModel) usuariosTable.getModel();
-        for (User u : usuarios) {
-            tablaContenido.addRow(new Object[] {u.getUsername()});
+        User usuarioAEliminar = null;
+        
+        for (User usuario : usuarios) {
+            if (usuario.getUsername().equals(nombreUsuario)) {
+                usuarioAEliminar = usuario;
+                break;
+            }
         }
-        usuariosTable.setModel(tablaContenido);
+        
+        if (usuarioAEliminar == null) {
+            JOptionPane.showMessageDialog(this,
+                "No se pudo encontrar el usuario seleccionado",
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // Confirmar eliminación
+        int confirmacion = JOptionPane.showConfirmDialog(this,
+            "¿Está seguro que desea eliminar al usuario '" + nombreUsuario + "'?\n" +
+            "Esta acción no se puede deshacer.",
+            "Confirmar eliminación",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.WARNING_MESSAGE);
+        
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            try {
+                if (servicioManejoUsuarios.deleteUser(usuarioAEliminar.getId())) {
+                    JOptionPane.showMessageDialog(this,
+                        "Usuario '" + nombreUsuario + "' eliminado exitosamente",
+                        "Éxito",
+                        JOptionPane.INFORMATION_MESSAGE);
+                    
+                    // Recargar la tabla
+                    cargarUsuarios();
+                } else {
+                    JOptionPane.showMessageDialog(this,
+                        "No se pudo eliminar el usuario '" + nombreUsuario + "'",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                }
+                
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this,
+                    "Error al eliminar usuario: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+    
+    /**
+     * Método obsoleto - mantener por compatibilidad
+     */
+    public void iniciarTablaUsuarios() {
+        cargarUsuarios();
     }
     
     /**
@@ -47,17 +172,6 @@ public class MenuAdmin extends javax.swing.JFrame {
     private void initComponents() {
 
         tabs = new javax.swing.JTabbedPane();
-        usuariosPanel = new javax.swing.JPanel();
-        usuariosScrollPane = new javax.swing.JScrollPane();
-        usuariosTable = new javax.swing.JTable();
-        nombreUsuarioLabel = new javax.swing.JLabel();
-        nombreUsuarioTField = new javax.swing.JTextField();
-        correoLabel = new javax.swing.JLabel();
-        correoTField = new javax.swing.JTextField();
-        agregarUsuarioButton = new javax.swing.JButton();
-        eliminarUsuarioButton = new javax.swing.JButton();
-        editarButton = new javax.swing.JButton();
-        cargarArchivoButton = new javax.swing.JButton();
         mapaPanel = new javax.swing.JPanel();
         matrizLabel = new javax.swing.JLabel();
         nombreCiudadLabel = new javax.swing.JLabel();
@@ -75,6 +189,10 @@ public class MenuAdmin extends javax.swing.JFrame {
         eliminarConexionButton = new javax.swing.JButton();
         verMapaButton = new javax.swing.JButton();
         cargarArchivoMapaButton = new javax.swing.JButton();
+        usuariosPanel = new javax.swing.JPanel();
+        usuariosScrollPane = new javax.swing.JScrollPane();
+        usuariosTable = new javax.swing.JTable();
+        eliminarUsuarioButton = new javax.swing.JButton();
         estacionesPanel = new javax.swing.JPanel();
         listaEstacionesScrollPane = new javax.swing.JScrollPane();
         listaEstacionesTable = new javax.swing.JTable();
@@ -90,90 +208,8 @@ public class MenuAdmin extends javax.swing.JFrame {
         agregarEstacionButton = new javax.swing.JButton();
         eliminarEstacionButton = new javax.swing.JButton();
         editarCargadoresButton = new javax.swing.JButton();
-        cargarArchivoEstacionesButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        usuariosTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Lista de usuarios"
-            }
-        ));
-        usuariosScrollPane.setViewportView(usuariosTable);
-
-        nombreUsuarioLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        nombreUsuarioLabel.setText("Nombre de usuario:");
-
-        nombreUsuarioTField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-
-        correoLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        correoLabel.setText("Correo:");
-
-        correoTField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-
-        agregarUsuarioButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        agregarUsuarioButton.setText("Agregar");
-
-        eliminarUsuarioButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        eliminarUsuarioButton.setText("Eliminar");
-
-        editarButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        editarButton.setText("Editar");
-
-        cargarArchivoButton.setText("Cargar archivo");
-
-        javax.swing.GroupLayout usuariosPanelLayout = new javax.swing.GroupLayout(usuariosPanel);
-        usuariosPanel.setLayout(usuariosPanelLayout);
-        usuariosPanelLayout.setHorizontalGroup(
-            usuariosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(usuariosPanelLayout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addComponent(usuariosScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
-                .addGroup(usuariosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(usuariosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(nombreUsuarioLabel)
-                        .addComponent(nombreUsuarioTField)
-                        .addComponent(correoLabel)
-                        .addComponent(correoTField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(eliminarUsuarioButton)
-                    .addComponent(editarButton)
-                    .addComponent(agregarUsuarioButton))
-                .addGap(114, 114, 114))
-            .addGroup(usuariosPanelLayout.createSequentialGroup()
-                .addGap(170, 170, 170)
-                .addComponent(cargarArchivoButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        usuariosPanelLayout.setVerticalGroup(
-            usuariosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(usuariosPanelLayout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addGroup(usuariosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(usuariosPanelLayout.createSequentialGroup()
-                        .addComponent(nombreUsuarioLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(nombreUsuarioTField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(correoLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(correoTField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
-                        .addComponent(agregarUsuarioButton)
-                        .addGap(18, 18, 18)
-                        .addComponent(editarButton)
-                        .addGap(18, 18, 18)
-                        .addComponent(eliminarUsuarioButton))
-                    .addComponent(usuariosScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(44, 44, 44)
-                .addComponent(cargarArchivoButton)
-                .addContainerGap(58, Short.MAX_VALUE))
-        );
-
-        tabs.addTab("Usuarios", usuariosPanel);
 
         matrizLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         matrizLabel.setText("Matriz");
@@ -228,7 +264,7 @@ public class MenuAdmin extends javax.swing.JFrame {
                 .addGroup(mapaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(mapaPanelLayout.createSequentialGroup()
                         .addComponent(matrizLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 330, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 334, Short.MAX_VALUE)
                         .addGroup(mapaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(costoSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(estacionCiudadButton)
@@ -301,6 +337,55 @@ public class MenuAdmin extends javax.swing.JFrame {
 
         tabs.addTab("Mapa", mapaPanel);
 
+        usuariosTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Lista de usuarios"
+            }
+        ));
+        usuariosScrollPane.setViewportView(usuariosTable);
+
+        eliminarUsuarioButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        eliminarUsuarioButton.setText("Eliminar");
+        eliminarUsuarioButton.setEnabled(false); // Inicialmente deshabilitado
+        eliminarUsuarioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminarUsuarioButtonActionPerformed(evt);
+            }
+        });
+
+        // Agregar listener para la selección de la tabla
+        usuariosTable.getSelectionModel().addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                usuariosTableValueChanged(evt);
+            }
+        });
+
+        javax.swing.GroupLayout usuariosPanelLayout = new javax.swing.GroupLayout(usuariosPanel);
+        usuariosPanel.setLayout(usuariosPanelLayout);
+        usuariosPanelLayout.setHorizontalGroup(
+            usuariosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(usuariosPanelLayout.createSequentialGroup()
+                .addGap(202, 202, 202)
+                .addGroup(usuariosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(eliminarUsuarioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(usuariosScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(219, Short.MAX_VALUE))
+        );
+        usuariosPanelLayout.setVerticalGroup(
+            usuariosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(usuariosPanelLayout.createSequentialGroup()
+                .addGap(57, 57, 57)
+                .addComponent(usuariosScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(eliminarUsuarioButton)
+                .addContainerGap(92, Short.MAX_VALUE))
+        );
+
+        tabs.addTab("Usuarios", usuariosPanel);
+
         listaEstacionesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null},
@@ -319,6 +404,11 @@ public class MenuAdmin extends javax.swing.JFrame {
         combustibleLabel.setText("Combustible:");
 
         regularRButton.setText("Regular");
+        regularRButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                regularRButtonActionPerformed(evt);
+            }
+        });
 
         plusRButton.setText("Plus");
 
@@ -341,47 +431,44 @@ public class MenuAdmin extends javax.swing.JFrame {
 
         editarCargadoresButton.setText("Editar cargadores");
 
-        cargarArchivoEstacionesButton.setText("Cargar archivo");
-
         javax.swing.GroupLayout estacionesPanelLayout = new javax.swing.GroupLayout(estacionesPanel);
         estacionesPanel.setLayout(estacionesPanelLayout);
         estacionesPanelLayout.setHorizontalGroup(
             estacionesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(estacionesPanelLayout.createSequentialGroup()
+                .addGap(38, 38, 38)
                 .addGroup(estacionesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(editarCargadoresButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(listaEstacionesScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(estacionesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(nombreEstacionLabel)
+                    .addComponent(nombreEstacionTField)
+                    .addComponent(combustibleLabel)
+                    .addComponent(tiposCargadorLabel)
+                    .addComponent(seleccionarCargadorButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(agregarEstacionButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(eliminarEstacionButton, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(estacionesPanelLayout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(listaEstacionesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(80, 80, 80)
                         .addGroup(estacionesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(nombreEstacionLabel)
-                            .addComponent(nombreEstacionTField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(combustibleLabel)
-                            .addGroup(estacionesPanelLayout.createSequentialGroup()
-                                .addComponent(regularRButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(plusRButton))
-                            .addGroup(estacionesPanelLayout.createSequentialGroup()
-                                .addComponent(dieselRButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(gasLPRButton))
-                            .addComponent(tiposCargadorLabel)
-                            .addComponent(seleccionarCargadorButton)
-                            .addComponent(agregarEstacionButton)
-                            .addComponent(eliminarEstacionButton)))
-                    .addGroup(estacionesPanelLayout.createSequentialGroup()
-                        .addGap(80, 80, 80)
-                        .addComponent(editarCargadoresButton)
-                        .addGap(37, 37, 37)
-                        .addComponent(cargarArchivoEstacionesButton)))
-                .addContainerGap(42, Short.MAX_VALUE))
+                            .addComponent(regularRButton)
+                            .addComponent(dieselRButton))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(estacionesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(gasLPRButton)
+                            .addComponent(plusRButton))))
+                .addGap(37, 37, 37))
         );
         estacionesPanelLayout.setVerticalGroup(
             estacionesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(estacionesPanelLayout.createSequentialGroup()
-                .addGap(33, 33, 33)
                 .addGroup(estacionesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(estacionesPanelLayout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(listaEstacionesScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 491, Short.MAX_VALUE)
+                        .addGap(18, 18, 18))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, estacionesPanelLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(nombreEstacionLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(nombreEstacionTField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -395,20 +482,17 @@ public class MenuAdmin extends javax.swing.JFrame {
                         .addGroup(estacionesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(dieselRButton)
                             .addComponent(gasLPRButton))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(tiposCargadorLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(seleccionarCargadorButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(agregarEstacionButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(eliminarEstacionButton))
-                    .addComponent(listaEstacionesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(37, 37, 37)
-                .addGroup(estacionesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(editarCargadoresButton)
-                    .addComponent(cargarArchivoEstacionesButton))
-                .addContainerGap(45, Short.MAX_VALUE))
+                        .addComponent(eliminarEstacionButton)
+                        .addGap(102, 102, 102)))
+                .addComponent(editarCargadoresButton)
+                .addGap(28, 28, 28))
         );
 
         tabs.addTab("Estaciones", estacionesPanel);
@@ -433,21 +517,35 @@ public class MenuAdmin extends javax.swing.JFrame {
         seleccionarCargador.setVisible(true);
     }//GEN-LAST:event_seleccionarCargadorButtonActionPerformed
 
+    private void regularRButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regularRButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_regularRButtonActionPerformed
+
+    /**
+     * Maneja el evento del botón eliminar usuario
+     */
+    private void eliminarUsuarioButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        eliminarUsuarioSeleccionado();
+    }
+
+    /**
+     * Maneja el evento de cambio de selección en la tabla de usuarios
+     */
+    private void usuariosTableValueChanged(javax.swing.event.ListSelectionEvent evt) {
+        if (!evt.getValueIsAdjusting()) {
+            actualizarEstadoBotonEliminar();
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton agregarCiudadButton;
     private javax.swing.JButton agregarConexionButton;
     private javax.swing.JButton agregarEstacionButton;
-    private javax.swing.JButton agregarUsuarioButton;
-    private javax.swing.JButton cargarArchivoButton;
-    private javax.swing.JButton cargarArchivoEstacionesButton;
     private javax.swing.JButton cargarArchivoMapaButton;
     private javax.swing.JLabel combustibleLabel;
-    private javax.swing.JLabel correoLabel;
-    private javax.swing.JTextField correoTField;
     private javax.swing.JSpinner costoSpinner;
     private javax.swing.JComboBox<String> destinoCBox;
     private javax.swing.JRadioButton dieselRButton;
-    private javax.swing.JButton editarButton;
     private javax.swing.JButton editarCargadoresButton;
     private javax.swing.JLabel editarConexionesLabel;
     private javax.swing.JButton eliminarCiudadButton;
@@ -467,8 +565,6 @@ public class MenuAdmin extends javax.swing.JFrame {
     private javax.swing.JTextField nombreCiudadTField;
     private javax.swing.JLabel nombreEstacionLabel;
     private javax.swing.JTextField nombreEstacionTField;
-    private javax.swing.JLabel nombreUsuarioLabel;
-    private javax.swing.JTextField nombreUsuarioTField;
     private javax.swing.JComboBox<String> origenCBox;
     private javax.swing.JRadioButton plusRButton;
     private javax.swing.JRadioButton regularRButton;

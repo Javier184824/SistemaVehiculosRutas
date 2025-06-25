@@ -38,7 +38,6 @@ public class InicioSesion extends javax.swing.JFrame {
         nombreUsuarioTField = new javax.swing.JTextField();
         contraseniaLabel = new javax.swing.JLabel();
         contraseniaPField = new javax.swing.JPasswordField();
-        mostrarContraseniaCheckBox = new javax.swing.JCheckBox();
         iniciarButton = new javax.swing.JButton();
         crearCuentaButton = new javax.swing.JButton();
 
@@ -57,14 +56,6 @@ public class InicioSesion extends javax.swing.JFrame {
         contraseniaLabel.setText("Contraseña");
 
         contraseniaPField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-
-        mostrarContraseniaCheckBox.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        mostrarContraseniaCheckBox.setText("Mostrar constraseña");
-        mostrarContraseniaCheckBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mostrarContraseniaCheckBoxActionPerformed(evt);
-            }
-        });
 
         iniciarButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         iniciarButton.setText("Inciar");
@@ -87,45 +78,40 @@ public class InicioSesion extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(230, 230, 230)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(248, 248, 248)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(nombreUsuarioLabel)
+                        .addComponent(nombreUsuarioTField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(contraseniaLabel)
+                        .addComponent(contraseniaPField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(13, 13, 13)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(nombreUsuarioLabel)
-                            .addComponent(contraseniaLabel)
-                            .addComponent(mostrarContraseniaCheckBox)
-                            .addComponent(nombreUsuarioTField)
-                            .addComponent(contraseniaPField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(inicioSesionLabel)
+                        .addGap(22, 22, 22))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(iniciarButton)
-                        .addGap(64, 64, 64)
-                        .addComponent(crearCuentaButton))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addComponent(inicioSesionLabel)))
-                .addContainerGap(226, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(crearCuentaButton)))
+                .addContainerGap(254, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(83, 83, 83)
+                .addGap(139, 139, 139)
                 .addComponent(inicioSesionLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(40, 40, 40)
+                .addGap(18, 18, 18)
                 .addComponent(nombreUsuarioLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(nombreUsuarioTField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(55, 55, 55)
+                .addGap(18, 18, 18)
                 .addComponent(contraseniaLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(contraseniaPField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(mostrarContraseniaCheckBox)
-                .addGap(30, 30, 30)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(iniciarButton)
                     .addComponent(crearCuentaButton))
-                .addGap(93, 93, 93))
+                .addGap(144, 144, 144))
         );
 
         pack();
@@ -137,7 +123,6 @@ public class InicioSesion extends javax.swing.JFrame {
             this.dispose();
             if (controladorAutenticacion.getCurrentUser().isAdmin()) {
                 MenuAdmin menuAdmin = new MenuAdmin(context);
-                menuAdmin.iniciarTablaUsuarios();
                 menuAdmin.setVisible(true);
             }
             else {
@@ -156,17 +141,12 @@ public class InicioSesion extends javax.swing.JFrame {
         new CrearCuenta(context).setVisible(true);
     }//GEN-LAST:event_crearCuentaButtonActionPerformed
 
-    private void mostrarContraseniaCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarContraseniaCheckBoxActionPerformed
-        
-    }//GEN-LAST:event_mostrarContraseniaCheckBoxActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel contraseniaLabel;
     private javax.swing.JPasswordField contraseniaPField;
     private javax.swing.JButton crearCuentaButton;
     private javax.swing.JButton iniciarButton;
     private javax.swing.JLabel inicioSesionLabel;
-    private javax.swing.JCheckBox mostrarContraseniaCheckBox;
     private javax.swing.JLabel nombreUsuarioLabel;
     private javax.swing.JTextField nombreUsuarioTField;
     // End of variables declaration//GEN-END:variables

@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package vista;
 
 import Main.RouteSystemContext;
@@ -14,10 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author javie
- */
 public class MenuUsuarioRegular extends javax.swing.JFrame {
     
     private RouteSystemContext context;
@@ -182,6 +175,11 @@ public class MenuUsuarioRegular extends javax.swing.JFrame {
 
         tipoCombustibleCbox.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tipoCombustibleCbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        tipoCombustibleCbox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tipoCombustibleCboxActionPerformed(evt);
+            }
+        });
         vehiculosPanel.add(tipoCombustibleCbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 190, -1, -1));
 
         agregarButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -246,6 +244,10 @@ public class MenuUsuarioRegular extends javax.swing.JFrame {
             tablaVehiculos.setModel(tablaContenido);
         } 
     }//GEN-LAST:event_eliminarButtonActionPerformed
+
+    private void tipoCombustibleCboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tipoCombustibleCboxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tipoCombustibleCboxActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton agregarButton;

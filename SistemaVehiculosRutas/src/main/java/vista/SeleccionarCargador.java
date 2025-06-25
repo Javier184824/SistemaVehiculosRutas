@@ -34,6 +34,7 @@ public class SeleccionarCargador extends javax.swing.JFrame {
         cargadoresTable = new javax.swing.JTable();
         editarButton = new javax.swing.JButton();
         listoButton = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -57,6 +58,8 @@ public class SeleccionarCargador extends javax.swing.JFrame {
             }
         ));
         cargadoresScrollPane.setViewportView(cargadoresTable);
+
+        getContentPane().add(cargadoresScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 650, 290));
 
         editarButton.setText("Editar tipos de cargador");
 
@@ -90,6 +93,9 @@ public class SeleccionarCargador extends javax.swing.JFrame {
                 .addContainerGap(97, Short.MAX_VALUE))
         );
 
+        jButton1.setText("Listo");
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 340, 420, 30));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -111,6 +117,7 @@ public class SeleccionarCargador extends javax.swing.JFrame {
     private javax.swing.JScrollPane cargadoresScrollPane;
     private javax.swing.JTable cargadoresTable;
     private javax.swing.JButton editarButton;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton listoButton;
     // End of variables declaration//GEN-END:variables
 }
