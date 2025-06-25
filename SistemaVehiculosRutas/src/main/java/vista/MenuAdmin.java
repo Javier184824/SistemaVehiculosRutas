@@ -428,11 +428,9 @@ public class MenuAdmin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void seleccionarCargadorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleccionarCargadorButtonActionPerformed
-        this.setFocusableWindowState(false);
-        SeleccionarCargador seleccionarCargador = new SeleccionarCargador();
-        while (seleccionarCargador.isActive()) {
-            
-        }
+        this.dispose();
+        SeleccionarCargador seleccionarCargador = new SeleccionarCargador(context);
+        seleccionarCargador.setVisible(true);
     }//GEN-LAST:event_seleccionarCargadorButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

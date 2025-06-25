@@ -4,16 +4,20 @@
  */
 package vista;
 
+import Main.RouteSystemContext;
+
 /**
  *
  * @author javie
  */
 public class SeleccionarCargador extends javax.swing.JFrame {
-
+    
+    private RouteSystemContext context;
     /**
      * Creates new form SeleccionarCargador
      */
-    public SeleccionarCargador() {
+    public SeleccionarCargador(RouteSystemContext context) {
+        this.context = context;
         initComponents();
     }
 
@@ -32,7 +36,17 @@ public class SeleccionarCargador extends javax.swing.JFrame {
         listoButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                SeleccionarCargador.this.windowClosed(evt);
+            }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                SeleccionarCargador.this.windowClosing(evt);
+            }
+            public void windowDeactivated(java.awt.event.WindowEvent evt) {
+                SeleccionarCargador.this.windowDeactivated(evt);
+            }
+        });
 
         cargadoresTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -44,17 +58,55 @@ public class SeleccionarCargador extends javax.swing.JFrame {
         ));
         cargadoresScrollPane.setViewportView(cargadoresTable);
 
-        getContentPane().add(cargadoresScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 640, 356));
-
         editarButton.setText("Editar tipos de cargador");
-        getContentPane().add(editarButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 430, -1, -1));
 
         listoButton.setText("Listo");
-        getContentPane().add(listoButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 430, -1, -1));
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(cargadoresScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addComponent(editarButton)
+                        .addGap(51, 51, 51)
+                        .addComponent(listoButton)))
+                .addContainerGap(110, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(cargadoresScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(editarButton)
+                    .addComponent(listoButton))
+                .addContainerGap(97, Short.MAX_VALUE))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void windowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowClosing
+        MenuAdmin menuAdmin = new MenuAdmin(context);
+        menuAdmin.setVisible(true);
+    }//GEN-LAST:event_windowClosing
+
+    private void windowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowClosed
+        
+    }//GEN-LAST:event_windowClosed
+
+    private void windowDeactivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowDeactivated
+        
+    }//GEN-LAST:event_windowDeactivated
+
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane cargadoresScrollPane;
     private javax.swing.JTable cargadoresTable;
