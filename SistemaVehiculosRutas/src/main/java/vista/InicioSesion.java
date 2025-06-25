@@ -5,7 +5,7 @@
 package vista;
 
 import Main.RouteSystemContext;
-import User.UserRole;
+import Services.AuthenticationService;
 import javax.swing.JOptionPane;
 
 /**
@@ -60,6 +60,11 @@ public class InicioSesion extends javax.swing.JFrame {
 
         mostrarContraseniaCheckBox.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         mostrarContraseniaCheckBox.setText("Mostrar constraseña");
+        mostrarContraseniaCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mostrarContraseniaCheckBoxActionPerformed(evt);
+            }
+        });
 
         iniciarButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         iniciarButton.setText("Inciar");
@@ -127,10 +132,20 @@ public class InicioSesion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void iniciarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iniciarButtonActionPerformed
-        if (context.getAuthenticationService().login(nombreUsuarioTField.getText(), contraseniaPField.getText())) {
+        AuthenticationService controladorAutenticacion = context.getAuthenticationService();
+        if (controladorAutenticacion.login(nombreUsuarioTField.getText(), contraseniaPField.getText())) {
             this.dispose();
-            new MenuUsarioRegular(context).setVisible(true);
-        } 
+            if (controladorAutenticacion.getCurrentUser().isAdmin()) {
+                MenuAdmin menuAdmin = new MenuAdmin(context);
+                menuAdmin.iniciarTablaUsuarios();
+                menuAdmin.setVisible(true);
+            }
+            else {
+                MenuUsuarioRegular menuUsuarioRegular = new MenuUsuarioRegular(context);
+                menuUsuarioRegular.iniciarTabla();
+                menuUsuarioRegular.setVisible(true);
+            }
+        }
         else {
             JOptionPane.showMessageDialog(this, "Nombre de usuario o contraseña incorrecta.");
         }
@@ -140,6 +155,15 @@ public class InicioSesion extends javax.swing.JFrame {
         this.dispose();
         new CrearCuenta(context).setVisible(true);
     }//GEN-LAST:event_crearCuentaButtonActionPerformed
+
+    private void mostrarContraseniaCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarContraseniaCheckBoxActionPerformed
+        if (mostrarContraseniaCheckBox.isSelected()) {
+            contraseniaPField.show(true);
+        }
+        else {
+            contraseniaPField.show(false);
+        }
+    }//GEN-LAST:event_mostrarContraseniaCheckBoxActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel contraseniaLabel;

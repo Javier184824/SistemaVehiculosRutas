@@ -4,19 +4,40 @@
  */
 package vista;
 
+import Admin.AdminService;
+import Admin.UserManagementService;
+import Main.RouteSystemContext;
+import User.User;
+import User.UserService;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author javie
  */
 public class MenuAdmin extends javax.swing.JFrame {
-
+    
+    private RouteSystemContext context;
     /**
      * Creates new form MenuAdmin
      */
-    public MenuAdmin() {
+    public MenuAdmin(RouteSystemContext context) {
+        this.context = context;
         initComponents();
     }
-
+    
+    public void iniciarTablaUsuarios() {
+        UserManagementService servicioManejoUsuarios = context.getAdminService().getUserManager();
+        List<User> usuarios = servicioManejoUsuarios.getAllUsers();
+        
+        DefaultTableModel tablaContenido = (DefaultTableModel) usuariosTable.getModel();
+        for (User u : usuarios) {
+            tablaContenido.addRow(new Object[] {u.getUsername()});
+        }
+        usuariosTable.setModel(tablaContenido);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,8 +49,8 @@ public class MenuAdmin extends javax.swing.JFrame {
 
         tabs = new javax.swing.JTabbedPane();
         usuariosPanel = new javax.swing.JPanel();
-        listaUsuariosScrollPane = new javax.swing.JScrollPane();
-        listaUsuariosTable = new javax.swing.JTable();
+        usuariosScrollPane = new javax.swing.JScrollPane();
+        usuariosTable = new javax.swing.JTable();
         nombreUsuarioLabel = new javax.swing.JLabel();
         nombreUsuarioTField = new javax.swing.JTextField();
         correoLabel = new javax.swing.JLabel();
@@ -74,18 +95,15 @@ public class MenuAdmin extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        listaUsuariosTable.setModel(new javax.swing.table.DefaultTableModel(
+        usuariosTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null},
-                {null},
-                {null},
-                {null}
+
             },
             new String [] {
                 "Lista de usuarios"
             }
         ));
-        listaUsuariosScrollPane.setViewportView(listaUsuariosTable);
+        usuariosScrollPane.setViewportView(usuariosTable);
 
         nombreUsuarioLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         nombreUsuarioLabel.setText("Nombre de usuario:");
@@ -114,7 +132,7 @@ public class MenuAdmin extends javax.swing.JFrame {
             usuariosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(usuariosPanelLayout.createSequentialGroup()
                 .addGap(47, 47, 47)
-                .addComponent(listaUsuariosScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(usuariosScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
                 .addGroup(usuariosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(usuariosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -150,7 +168,7 @@ public class MenuAdmin extends javax.swing.JFrame {
                         .addComponent(editarButton)
                         .addGap(18, 18, 18)
                         .addComponent(eliminarUsuarioButton))
-                    .addComponent(listaUsuariosScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(usuariosScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(44, 44, 44)
                 .addComponent(cargarArchivoButton)
                 .addContainerGap(58, Short.MAX_VALUE))
@@ -432,8 +450,6 @@ public class MenuAdmin extends javax.swing.JFrame {
     private javax.swing.JSpinner kilometrosSpinner;
     private javax.swing.JScrollPane listaEstacionesScrollPane;
     private javax.swing.JTable listaEstacionesTable;
-    private javax.swing.JScrollPane listaUsuariosScrollPane;
-    private javax.swing.JTable listaUsuariosTable;
     private javax.swing.JPanel mapaPanel;
     private javax.swing.JLabel matrizLabel;
     private javax.swing.JSpinner minutosSpinner;
@@ -450,6 +466,8 @@ public class MenuAdmin extends javax.swing.JFrame {
     private javax.swing.JTabbedPane tabs;
     private javax.swing.JLabel tiposCargadorLabel;
     private javax.swing.JPanel usuariosPanel;
+    private javax.swing.JScrollPane usuariosScrollPane;
+    private javax.swing.JTable usuariosTable;
     private javax.swing.JButton verMapaButton;
     // End of variables declaration//GEN-END:variables
 }

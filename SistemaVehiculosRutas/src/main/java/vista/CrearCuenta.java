@@ -125,7 +125,9 @@ public class CrearCuenta extends javax.swing.JFrame {
     private void registrarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarButtonActionPerformed
         if (context.getAuthenticationService().register(nombreUsuarioTField.getText(), contraseniaPField.getText(), UserRole.USER) != null) {
             this.dispose();
-            new MenuUsarioRegular(context).setVisible(true);
+            MenuUsuarioRegular menuUsuarioRegular = new MenuUsuarioRegular(context);
+            menuUsuarioRegular.iniciarTabla();
+            menuUsuarioRegular.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(this, "El nombre de usuario ya existe.");
         }
