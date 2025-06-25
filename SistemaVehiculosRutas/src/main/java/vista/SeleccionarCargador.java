@@ -34,7 +34,6 @@ public class SeleccionarCargador extends javax.swing.JFrame {
 
         cargadoresScrollPane = new javax.swing.JScrollPane();
         cargadoresTable = new javax.swing.JTable();
-        editarButton = new javax.swing.JButton();
         listoButton = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
 
@@ -55,8 +54,6 @@ public class SeleccionarCargador extends javax.swing.JFrame {
         ));
         cargadoresScrollPane.setViewportView(cargadoresTable);
 
-        editarButton.setText("Editar tipos de cargador");
-
         listoButton.setText("Listo");
         listoButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -76,9 +73,7 @@ public class SeleccionarCargador extends javax.swing.JFrame {
                         .addGap(20, 20, 20)
                         .addComponent(cargadoresScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(60, 60, 60)
-                        .addComponent(editarButton)
-                        .addGap(51, 51, 51)
+                        .addGap(188, 188, 188)
                         .addComponent(listoButton)))
                 .addContainerGap(110, Short.MAX_VALUE))
         );
@@ -87,11 +82,9 @@ public class SeleccionarCargador extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(cargadoresScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(editarButton)
-                    .addComponent(listoButton))
-                .addContainerGap(97, Short.MAX_VALUE))
+                .addGap(32, 32, 32)
+                .addComponent(listoButton)
+                .addContainerGap(95, Short.MAX_VALUE))
         );
 
         pack();
@@ -110,7 +103,6 @@ public class SeleccionarCargador extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane cargadoresScrollPane;
     private javax.swing.JTable cargadoresTable;
-    private javax.swing.JButton editarButton;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton listoButton;
     // End of variables declaration//GEN-END:variables

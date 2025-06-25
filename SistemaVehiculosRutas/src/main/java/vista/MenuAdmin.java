@@ -297,6 +297,11 @@ public class MenuAdmin extends javax.swing.JFrame {
         eliminarEstacionButton.setText("Eliminar");
 
         editarCargadoresButton.setText("Editar cargadores");
+        editarCargadoresButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editarCargadoresButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout estacionesPanelLayout = new javax.swing.GroupLayout(estacionesPanel);
         estacionesPanel.setLayout(estacionesPanelLayout);
@@ -481,7 +486,6 @@ public class MenuAdmin extends javax.swing.JFrame {
                     .addGroup(mapaPanelLayout.createSequentialGroup()
                         .addComponent(jSpinner1)
                         .addGap(1, 1, 1)))
-                .addGap(18, 18, 18)
                 .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(mapaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -521,6 +525,13 @@ public class MenuAdmin extends javax.swing.JFrame {
     private void origenCBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_origenCBoxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_origenCBoxActionPerformed
+
+    private void editarCargadoresButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarCargadoresButtonActionPerformed
+        this.setEnabled(false);
+        EditarCargador editarCargador = new EditarCargador(context, this);
+        editarCargador.cargarCargadores();
+        editarCargador.setVisible(true);
+    }//GEN-LAST:event_editarCargadoresButtonActionPerformed
 
     /**
      * Maneja el evento del botón eliminar usuario
