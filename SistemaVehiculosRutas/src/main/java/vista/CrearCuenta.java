@@ -39,7 +39,6 @@ public class CrearCuenta extends javax.swing.JFrame {
         correoTField = new javax.swing.JTextField();
         contraniaLabel = new javax.swing.JLabel();
         contraseniaPField = new javax.swing.JPasswordField();
-        mostrarContraseniaCheckBox = new javax.swing.JCheckBox();
         registrarButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -62,9 +61,11 @@ public class CrearCuenta extends javax.swing.JFrame {
         contraniaLabel.setText("Contraseña");
 
         contraseniaPField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-
-        mostrarContraseniaCheckBox.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        mostrarContraseniaCheckBox.setText("Mostrar constraseña");
+        contraseniaPField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                contraseniaPFieldActionPerformed(evt);
+            }
+        });
 
         registrarButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         registrarButton.setText("Registrar");
@@ -79,12 +80,11 @@ public class CrearCuenta extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(248, 248, 248)
+                .addGap(244, 244, 244)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(53, 53, 53)
                         .addComponent(registroLabel))
-                    .addComponent(mostrarContraseniaCheckBox)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(nombreUsuarioLabel)
                         .addComponent(nombreUsuarioTField)
@@ -93,14 +93,14 @@ public class CrearCuenta extends javax.swing.JFrame {
                         .addComponent(contraniaLabel)
                         .addComponent(contraseniaPField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(registrarButton))
-                .addContainerGap(252, Short.MAX_VALUE))
+                .addContainerGap(256, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(68, 68, 68)
+                .addGap(102, 102, 102)
                 .addComponent(registroLabel)
-                .addGap(41, 41, 41)
+                .addGap(18, 18, 18)
                 .addComponent(nombreUsuarioLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(nombreUsuarioTField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -113,10 +113,8 @@ public class CrearCuenta extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(contraseniaPField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(mostrarContraseniaCheckBox)
-                .addGap(18, 18, 18)
                 .addComponent(registrarButton)
-                .addContainerGap(80, Short.MAX_VALUE))
+                .addContainerGap(111, Short.MAX_VALUE))
         );
 
         pack();
@@ -133,13 +131,16 @@ public class CrearCuenta extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_registrarButtonActionPerformed
 
+    private void contraseniaPFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contraseniaPFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_contraseniaPFieldActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel contraniaLabel;
     private javax.swing.JPasswordField contraseniaPField;
     private javax.swing.JLabel correoLabel;
     private javax.swing.JTextField correoTField;
-    private javax.swing.JCheckBox mostrarContraseniaCheckBox;
     private javax.swing.JLabel nombreUsuarioLabel;
     private javax.swing.JTextField nombreUsuarioTField;
     private javax.swing.JButton registrarButton;

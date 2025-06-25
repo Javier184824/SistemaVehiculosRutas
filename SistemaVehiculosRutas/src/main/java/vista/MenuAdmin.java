@@ -90,7 +90,6 @@ public class MenuAdmin extends javax.swing.JFrame {
         agregarEstacionButton = new javax.swing.JButton();
         eliminarEstacionButton = new javax.swing.JButton();
         editarCargadoresButton = new javax.swing.JButton();
-        cargarArchivoEstacionesButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -132,16 +131,15 @@ public class MenuAdmin extends javax.swing.JFrame {
             .addGroup(usuariosPanelLayout.createSequentialGroup()
                 .addGap(47, 47, 47)
                 .addComponent(usuariosScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
-                .addGroup(usuariosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(usuariosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(nombreUsuarioLabel)
-                        .addComponent(nombreUsuarioTField)
-                        .addComponent(correoLabel)
-                        .addComponent(correoTField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(eliminarUsuarioButton)
-                    .addComponent(editarButton)
-                    .addComponent(agregarUsuarioButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
+                .addGroup(usuariosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(nombreUsuarioLabel)
+                    .addComponent(nombreUsuarioTField)
+                    .addComponent(correoLabel)
+                    .addComponent(correoTField, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                    .addComponent(agregarUsuarioButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(editarButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(eliminarUsuarioButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(114, 114, 114))
             .addGroup(usuariosPanelLayout.createSequentialGroup()
                 .addGap(170, 170, 170)
@@ -170,7 +168,7 @@ public class MenuAdmin extends javax.swing.JFrame {
                     .addComponent(usuariosScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(44, 44, 44)
                 .addComponent(cargarArchivoButton)
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addContainerGap(86, Short.MAX_VALUE))
         );
 
         tabs.addTab("Usuarios", usuariosPanel);
@@ -341,47 +339,44 @@ public class MenuAdmin extends javax.swing.JFrame {
 
         editarCargadoresButton.setText("Editar cargadores");
 
-        cargarArchivoEstacionesButton.setText("Cargar archivo");
-
         javax.swing.GroupLayout estacionesPanelLayout = new javax.swing.GroupLayout(estacionesPanel);
         estacionesPanel.setLayout(estacionesPanelLayout);
         estacionesPanelLayout.setHorizontalGroup(
             estacionesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(estacionesPanelLayout.createSequentialGroup()
+                .addGap(38, 38, 38)
                 .addGroup(estacionesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(editarCargadoresButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(listaEstacionesScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(estacionesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(nombreEstacionLabel)
+                    .addComponent(nombreEstacionTField)
+                    .addComponent(combustibleLabel)
                     .addGroup(estacionesPanelLayout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(listaEstacionesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(80, 80, 80)
-                        .addGroup(estacionesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(nombreEstacionLabel)
-                            .addComponent(nombreEstacionTField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(combustibleLabel)
-                            .addGroup(estacionesPanelLayout.createSequentialGroup()
-                                .addComponent(regularRButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(plusRButton))
-                            .addGroup(estacionesPanelLayout.createSequentialGroup()
-                                .addComponent(dieselRButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(gasLPRButton))
-                            .addComponent(tiposCargadorLabel)
-                            .addComponent(seleccionarCargadorButton)
-                            .addComponent(agregarEstacionButton)
-                            .addComponent(eliminarEstacionButton)))
+                        .addComponent(regularRButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(plusRButton))
                     .addGroup(estacionesPanelLayout.createSequentialGroup()
-                        .addGap(80, 80, 80)
-                        .addComponent(editarCargadoresButton)
-                        .addGap(37, 37, 37)
-                        .addComponent(cargarArchivoEstacionesButton)))
-                .addContainerGap(42, Short.MAX_VALUE))
+                        .addComponent(dieselRButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(gasLPRButton))
+                    .addComponent(tiposCargadorLabel)
+                    .addComponent(seleccionarCargadorButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(agregarEstacionButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(eliminarEstacionButton, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(37, 37, 37))
         );
         estacionesPanelLayout.setVerticalGroup(
             estacionesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(estacionesPanelLayout.createSequentialGroup()
-                .addGap(33, 33, 33)
                 .addGroup(estacionesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(estacionesPanelLayout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(listaEstacionesScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 491, Short.MAX_VALUE)
+                        .addGap(18, 18, 18))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, estacionesPanelLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(nombreEstacionLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(nombreEstacionTField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -402,13 +397,10 @@ public class MenuAdmin extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(agregarEstacionButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(eliminarEstacionButton))
-                    .addComponent(listaEstacionesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(37, 37, 37)
-                .addGroup(estacionesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(editarCargadoresButton)
-                    .addComponent(cargarArchivoEstacionesButton))
-                .addContainerGap(45, Short.MAX_VALUE))
+                        .addComponent(eliminarEstacionButton)
+                        .addGap(114, 114, 114)))
+                .addComponent(editarCargadoresButton)
+                .addGap(28, 28, 28))
         );
 
         tabs.addTab("Estaciones", estacionesPanel);
@@ -441,7 +433,6 @@ public class MenuAdmin extends javax.swing.JFrame {
     private javax.swing.JButton agregarEstacionButton;
     private javax.swing.JButton agregarUsuarioButton;
     private javax.swing.JButton cargarArchivoButton;
-    private javax.swing.JButton cargarArchivoEstacionesButton;
     private javax.swing.JButton cargarArchivoMapaButton;
     private javax.swing.JLabel combustibleLabel;
     private javax.swing.JLabel correoLabel;

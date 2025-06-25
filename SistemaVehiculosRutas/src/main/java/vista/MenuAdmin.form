@@ -52,17 +52,15 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
                       <Component id="usuariosScrollPane" min="-2" pref="360" max="-2" attributes="0"/>
-                      <EmptySpace pref="79" max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="nombreUsuarioLabel" min="-2" max="-2" attributes="0"/>
-                              <Component id="nombreUsuarioTField" max="32767" attributes="0"/>
-                              <Component id="correoLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="correoTField" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="eliminarUsuarioButton" min="-2" max="-2" attributes="0"/>
-                          <Component id="editarButton" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="agregarUsuarioButton" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="83" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="nombreUsuarioLabel" min="-2" max="-2" attributes="0"/>
+                          <Component id="nombreUsuarioTField" max="32767" attributes="0"/>
+                          <Component id="correoLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="correoTField" alignment="0" pref="200" max="32767" attributes="0"/>
+                          <Component id="agregarUsuarioButton" alignment="0" max="32767" attributes="0"/>
+                          <Component id="editarButton" alignment="0" max="32767" attributes="0"/>
+                          <Component id="eliminarUsuarioButton" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="114" max="-2" attributes="0"/>
                   </Group>
@@ -97,7 +95,7 @@
                       </Group>
                       <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
                       <Component id="cargarArchivoButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="58" max="32767" attributes="0"/>
+                      <EmptySpace pref="86" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -464,48 +462,46 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                              <Component id="listaEstacionesScrollPane" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="80" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="nombreEstacionLabel" min="-2" max="-2" attributes="0"/>
-                                  <Component id="nombreEstacionTField" min="-2" pref="200" max="-2" attributes="0"/>
-                                  <Component id="combustibleLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="regularRButton" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="plusRButton" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="dieselRButton" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="gasLPRButton" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="tiposCargadorLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="seleccionarCargadorButton" min="-2" max="-2" attributes="0"/>
-                                  <Component id="agregarEstacionButton" min="-2" max="-2" attributes="0"/>
-                                  <Component id="eliminarEstacionButton" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="80" max="-2" attributes="0"/>
-                              <Component id="editarCargadoresButton" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
-                              <Component id="cargarArchivoEstacionesButton" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="editarCargadoresButton" max="32767" attributes="0"/>
+                          <Component id="listaEstacionesScrollPane" pref="511" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="42" max="32767" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="nombreEstacionLabel" min="-2" max="-2" attributes="0"/>
+                          <Component id="nombreEstacionTField" max="32767" attributes="0"/>
+                          <Component id="combustibleLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="regularRButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="plusRButton" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="dieselRButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="gasLPRButton" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="tiposCargadorLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="seleccionarCargadorButton" alignment="0" max="32767" attributes="0"/>
+                          <Component id="agregarEstacionButton" alignment="0" max="32767" attributes="0"/>
+                          <Component id="eliminarEstacionButton" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                              <Component id="listaEstacionesScrollPane" pref="491" max="32767" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace max="32767" attributes="0"/>
                               <Component id="nombreEstacionLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="nombreEstacionTField" min="-2" max="-2" attributes="0"/>
@@ -529,15 +525,11 @@
                               <Component id="agregarEstacionButton" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="eliminarEstacionButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="114" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="listaEstacionesScrollPane" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="editarCargadoresButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="cargarArchivoEstacionesButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace pref="45" max="32767" attributes="0"/>
+                      <Component id="editarCargadoresButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -631,11 +623,6 @@
             <Component class="javax.swing.JButton" name="editarCargadoresButton">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Editar cargadores"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JButton" name="cargarArchivoEstacionesButton">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Cargar archivo"/>
               </Properties>
             </Component>
           </SubComponents>
