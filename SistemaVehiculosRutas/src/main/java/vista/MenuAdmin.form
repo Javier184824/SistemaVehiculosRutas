@@ -309,12 +309,8 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="202" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="cargarArchivoButton" min="-2" pref="171" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="eliminarUsuarioButton" min="-2" pref="194" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="usuariosScrollPane" min="-2" pref="383" max="-2" attributes="0"/>
+                          <Component id="eliminarUsuarioButton" alignment="0" min="-2" pref="383" max="-2" attributes="0"/>
+                          <Component id="usuariosScrollPane" alignment="0" min="-2" pref="383" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="219" max="32767" attributes="0"/>
                   </Group>
@@ -326,11 +322,8 @@
                       <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
                       <Component id="usuariosScrollPane" min="-2" pref="399" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="eliminarUsuarioButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="cargarArchivoButton" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace pref="91" max="32767" attributes="0"/>
+                      <Component id="eliminarUsuarioButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="92" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -372,11 +365,6 @@
                   <Font name="Segoe UI" size="14" style="0"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Eliminar"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JButton" name="cargarArchivoButton">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Cargar archivo"/>
               </Properties>
             </Component>
           </SubComponents>

@@ -123,7 +123,6 @@ public class InicioSesion extends javax.swing.JFrame {
             this.dispose();
             if (controladorAutenticacion.getCurrentUser().isAdmin()) {
                 MenuAdmin menuAdmin = new MenuAdmin(context);
-                menuAdmin.iniciarTablaUsuarios();
                 menuAdmin.setVisible(true);
             }
             else {

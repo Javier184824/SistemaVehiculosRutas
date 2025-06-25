@@ -8,8 +8,10 @@ import Admin.AdminService;
 import Admin.UserManagementService;
 import Main.RouteSystemContext;
 import User.User;
+import User.UserRole;
 import User.UserService;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -19,22 +21,145 @@ import javax.swing.table.DefaultTableModel;
 public class MenuAdmin extends javax.swing.JFrame {
     
     private RouteSystemContext context;
+    
     /**
      * Creates new form MenuAdmin
      */
     public MenuAdmin(RouteSystemContext context) {
         this.context = context;
         initComponents();
+        configurarTablaUsuarios();
+        cargarUsuarios();
     }
     
-    public void iniciarTablaUsuarios() {
+    /**
+     * Configura la tabla de usuarios con las columnas apropiadas
+     */
+    private void configurarTablaUsuarios() {
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Usuario");
+        model.addColumn("Rol");
+        model.addColumn("Vehículos");
+        usuariosTable.setModel(model);
+        
+        // Hacer que la tabla no sea editable
+        usuariosTable.setDefaultEditor(Object.class, null);
+    }
+    
+    /**
+     * Carga todos los usuarios en la tabla
+     */
+    public void cargarUsuarios() {
+        try {
+            UserManagementService servicioManejoUsuarios = context.getAdminService().getUserManager();
+            List<User> usuarios = servicioManejoUsuarios.getAllUsers();
+            
+            DefaultTableModel tablaContenido = (DefaultTableModel) usuariosTable.getModel();
+            tablaContenido.setRowCount(0); // Limpiar tabla
+            
+            for (User usuario : usuarios) {
+                tablaContenido.addRow(new Object[] {
+                    usuario.getUsername(),
+                    usuario.getRole().getDisplayName(),
+                    usuario.getVehicles().size()
+                });
+            }
+            
+            // Actualizar el estado del botón eliminar
+            actualizarEstadoBotonEliminar();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, 
+                "Error al cargar usuarios: " + e.getMessage(), 
+                "Error", 
+                JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    /**
+     * Actualiza el estado del botón eliminar según si hay usuarios seleccionados
+     */
+    private void actualizarEstadoBotonEliminar() {
+        int filaSeleccionada = usuariosTable.getSelectedRow();
+        eliminarUsuarioButton.setEnabled(filaSeleccionada >= 0);
+    }
+    
+    /**
+     * Elimina el usuario seleccionado
+     */
+    private void eliminarUsuarioSeleccionado() {
+        int filaSeleccionada = usuariosTable.getSelectedRow();
+        
+        if (filaSeleccionada < 0) {
+            JOptionPane.showMessageDialog(this, 
+                "Por favor seleccione un usuario para eliminar", 
+                "Advertencia", 
+                JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        // Obtener el nombre del usuario seleccionado
+        String nombreUsuario = (String) usuariosTable.getValueAt(filaSeleccionada, 0);
+        
+        // Buscar el usuario por nombre para obtener su ID
         UserManagementService servicioManejoUsuarios = context.getAdminService().getUserManager();
         List<User> usuarios = servicioManejoUsuarios.getAllUsers();
-        DefaultTableModel tablaContenido = (DefaultTableModel) usuariosTable.getModel();
-        for (User u : usuarios) {
-            tablaContenido.addRow(new Object[] {u.getUsername()});
+        User usuarioAEliminar = null;
+        
+        for (User usuario : usuarios) {
+            if (usuario.getUsername().equals(nombreUsuario)) {
+                usuarioAEliminar = usuario;
+                break;
+            }
         }
-        usuariosTable.setModel(tablaContenido);
+        
+        if (usuarioAEliminar == null) {
+            JOptionPane.showMessageDialog(this,
+                "No se pudo encontrar el usuario seleccionado",
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // Confirmar eliminación
+        int confirmacion = JOptionPane.showConfirmDialog(this,
+            "¿Está seguro que desea eliminar al usuario '" + nombreUsuario + "'?\n" +
+            "Esta acción no se puede deshacer.",
+            "Confirmar eliminación",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.WARNING_MESSAGE);
+        
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            try {
+                if (servicioManejoUsuarios.deleteUser(usuarioAEliminar.getId())) {
+                    JOptionPane.showMessageDialog(this,
+                        "Usuario '" + nombreUsuario + "' eliminado exitosamente",
+                        "Éxito",
+                        JOptionPane.INFORMATION_MESSAGE);
+                    
+                    // Recargar la tabla
+                    cargarUsuarios();
+                } else {
+                    JOptionPane.showMessageDialog(this,
+                        "No se pudo eliminar el usuario '" + nombreUsuario + "'",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                }
+                
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this,
+                    "Error al eliminar usuario: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+    
+    /**
+     * Método obsoleto - mantener por compatibilidad
+     */
+    public void iniciarTablaUsuarios() {
+        cargarUsuarios();
     }
     
     /**
@@ -68,7 +193,6 @@ public class MenuAdmin extends javax.swing.JFrame {
         usuariosScrollPane = new javax.swing.JScrollPane();
         usuariosTable = new javax.swing.JTable();
         eliminarUsuarioButton = new javax.swing.JButton();
-        cargarArchivoButton = new javax.swing.JButton();
         estacionesPanel = new javax.swing.JPanel();
         listaEstacionesScrollPane = new javax.swing.JScrollPane();
         listaEstacionesTable = new javax.swing.JTable();
@@ -225,8 +349,19 @@ public class MenuAdmin extends javax.swing.JFrame {
 
         eliminarUsuarioButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         eliminarUsuarioButton.setText("Eliminar");
+        eliminarUsuarioButton.setEnabled(false); // Inicialmente deshabilitado
+        eliminarUsuarioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminarUsuarioButtonActionPerformed(evt);
+            }
+        });
 
-        cargarArchivoButton.setText("Cargar archivo");
+        // Agregar listener para la selección de la tabla
+        usuariosTable.getSelectionModel().addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                usuariosTableValueChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout usuariosPanelLayout = new javax.swing.GroupLayout(usuariosPanel);
         usuariosPanel.setLayout(usuariosPanelLayout);
@@ -235,10 +370,7 @@ public class MenuAdmin extends javax.swing.JFrame {
             .addGroup(usuariosPanelLayout.createSequentialGroup()
                 .addGap(202, 202, 202)
                 .addGroup(usuariosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(usuariosPanelLayout.createSequentialGroup()
-                        .addComponent(cargarArchivoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(eliminarUsuarioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(eliminarUsuarioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(usuariosScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(219, Short.MAX_VALUE))
         );
@@ -248,10 +380,8 @@ public class MenuAdmin extends javax.swing.JFrame {
                 .addGap(57, 57, 57)
                 .addComponent(usuariosScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(usuariosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(eliminarUsuarioButton)
-                    .addComponent(cargarArchivoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(91, Short.MAX_VALUE))
+                .addComponent(eliminarUsuarioButton)
+                .addContainerGap(92, Short.MAX_VALUE))
         );
 
         tabs.addTab("Usuarios", usuariosPanel);
@@ -393,11 +523,26 @@ public class MenuAdmin extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_regularRButtonActionPerformed
 
+    /**
+     * Maneja el evento del botón eliminar usuario
+     */
+    private void eliminarUsuarioButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        eliminarUsuarioSeleccionado();
+    }
+
+    /**
+     * Maneja el evento de cambio de selección en la tabla de usuarios
+     */
+    private void usuariosTableValueChanged(javax.swing.event.ListSelectionEvent evt) {
+        if (!evt.getValueIsAdjusting()) {
+            actualizarEstadoBotonEliminar();
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton agregarCiudadButton;
     private javax.swing.JButton agregarConexionButton;
     private javax.swing.JButton agregarEstacionButton;
-    private javax.swing.JButton cargarArchivoButton;
     private javax.swing.JButton cargarArchivoMapaButton;
     private javax.swing.JLabel combustibleLabel;
     private javax.swing.JSpinner costoSpinner;
