@@ -584,19 +584,6 @@ public class MenuAdmin extends javax.swing.JFrame {
             jTable1.setModel(modelo);
             jTable1.setDefaultEditor(Object.class, null); // Hacer no editable
             
-            // Mostrar mensaje informativo
-            if (conexiones.isEmpty()) {
-                JOptionPane.showMessageDialog(this,
-                    "No hay conexiones registradas en el sistema",
-                    "Información",
-                    JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(this,
-                    "Se muestran " + conexiones.size() + " conexiones en la tabla",
-                    "Información",
-                    JOptionPane.INFORMATION_MESSAGE);
-            }
-            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this,
                 "Error al listar conexiones: " + e.getMessage(),
@@ -1125,7 +1112,12 @@ public class MenuAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_regularRButtonActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
+        CityManagementService cityManager = context.getAdminService().getCityManager();
+        java.util.List<City> ciudades = cityManager.getAllCities();
+        java.util.List<Connection> conexiones = cityManager.getAllConnections();
+
+        MapaCiudadesFrame mapa = new MapaCiudadesFrame(ciudades, conexiones);
+        mapa.setVisible(true);
     }//GEN-LAST:event_jButton7ActionPerformed
 
     /**
