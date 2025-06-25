@@ -157,12 +157,7 @@ public class InicioSesion extends javax.swing.JFrame {
     }//GEN-LAST:event_crearCuentaButtonActionPerformed
 
     private void mostrarContraseniaCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarContraseniaCheckBoxActionPerformed
-        if (mostrarContraseniaCheckBox.isSelected()) {
-            contraseniaPField.show(true);
-        }
-        else {
-            contraseniaPField.show(false);
-        }
+        
     }//GEN-LAST:event_mostrarContraseniaCheckBoxActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
