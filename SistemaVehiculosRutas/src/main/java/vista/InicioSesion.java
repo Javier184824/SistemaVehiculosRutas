@@ -123,11 +123,13 @@ public class InicioSesion extends javax.swing.JFrame {
             this.dispose();
             if (controladorAutenticacion.getCurrentUser().isAdmin()) {
                 MenuAdmin menuAdmin = new MenuAdmin(context);
+                menuAdmin.cargarUsuarios();
+                menuAdmin.cargarEstaciones();
                 menuAdmin.setVisible(true);
             }
             else {
                 MenuUsuarioRegular menuUsuarioRegular = new MenuUsuarioRegular(context);
-                menuUsuarioRegular.iniciarTabla();
+                menuUsuarioRegular.cargarVehiculos();
                 menuUsuarioRegular.setVisible(true);
             }
         }

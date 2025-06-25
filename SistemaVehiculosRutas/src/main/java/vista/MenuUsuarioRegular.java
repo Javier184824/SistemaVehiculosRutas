@@ -23,7 +23,7 @@ public class MenuUsuarioRegular extends javax.swing.JFrame {
         initComponents();
     }
     
-    public void iniciarTabla() {
+    public void cargarVehiculos() {
         UserService servicioUsuario = context.getUserService();
         List<Vehicle> vehiculos = servicioUsuario.getVehicleService().getCurrentUserVehicles();
         DefaultTableModel tablaContenido = (DefaultTableModel) tablaVehiculos.getModel();

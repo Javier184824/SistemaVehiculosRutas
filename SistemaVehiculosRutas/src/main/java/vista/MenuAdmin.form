@@ -284,7 +284,7 @@
             <Component class="javax.swing.JRadioButton" name="regularRButton">
               <Properties>
                 <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                  <ComponentRef name="combustiblesBGroup"/>
+                  <ComponentRef name="default"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Regular"/>
               </Properties>
@@ -295,7 +295,7 @@
             <Component class="javax.swing.JRadioButton" name="plusRButton">
               <Properties>
                 <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                  <ComponentRef name="combustiblesBGroup"/>
+                  <ComponentRef name="default"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Plus"/>
               </Properties>
@@ -303,7 +303,7 @@
             <Component class="javax.swing.JRadioButton" name="dieselRButton">
               <Properties>
                 <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                  <ComponentRef name="combustiblesBGroup"/>
+                  <ComponentRef name="default"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Diesel"/>
               </Properties>
@@ -311,7 +311,7 @@
             <Component class="javax.swing.JRadioButton" name="gasLPRButton">
               <Properties>
                 <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                  <ComponentRef name="combustiblesBGroup"/>
+                  <ComponentRef name="default"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Gas LP"/>
               </Properties>

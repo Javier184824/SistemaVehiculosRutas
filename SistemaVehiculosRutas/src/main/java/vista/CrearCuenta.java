@@ -124,7 +124,7 @@ public class CrearCuenta extends javax.swing.JFrame {
         if (context.getAuthenticationService().register(nombreUsuarioTField.getText(), contraseniaPField.getText(), UserRole.USER) != null) {
             this.dispose();
             MenuUsuarioRegular menuUsuarioRegular = new MenuUsuarioRegular(context);
-            menuUsuarioRegular.iniciarTabla();
+            menuUsuarioRegular.cargarVehiculos();
             menuUsuarioRegular.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(this, "El nombre de usuario ya existe.");

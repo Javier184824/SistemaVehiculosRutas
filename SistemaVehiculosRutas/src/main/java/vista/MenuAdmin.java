@@ -6,10 +6,12 @@ package vista;
 
 import Admin.AdminService;
 import Admin.CityManagementService;
+import Admin.StationManagementService;
 import Admin.UserManagementService;
 import Main.RouteSystemContext;
 import Models.City;
 import Models.Connection;
+import Models.Station;
 import User.User;
 import User.UserRole;
 import User.UserService;
@@ -156,6 +158,38 @@ public class MenuAdmin extends javax.swing.JFrame {
                     usuario.getVehicles().size()
                 });
             }
+            usuariosTable.setModel(tablaContenido);
+            
+            // Actualizar el estado del botón eliminar
+            actualizarEstadoBotonEliminar();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, 
+                "Error al cargar usuarios: " + e.getMessage(), 
+                "Error", 
+                JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    public void cargarEstaciones() {
+        try {
+            Admin.CityManagementService servicioManejoCiudades = context.getAdminService().getCityManager();
+            List<City> ciudades = servicioManejoCiudades.getAllCities();
+            
+            DefaultTableModel tablaContenido = (DefaultTableModel) listaEstacionesTable.getModel();
+            tablaContenido.setRowCount(0); // Limpiar tabla
+            
+            for (City ciudad : ciudades) {
+                List<Station> estaciones = ciudad.getStations();
+                for (Station estacion : estaciones) {
+                    tablaContenido.addRow(new Object[] {
+                    estacion.getId(),
+                    estacion.getName(),
+                    estacion.getCity()
+                });
+                }
+            }
+            listaEstacionesTable.setModel(tablaContenido);
             
             // Actualizar el estado del botón eliminar
             actualizarEstadoBotonEliminar();
@@ -247,11 +281,8 @@ public class MenuAdmin extends javax.swing.JFrame {
         }
     }
     
-    /**
-     * Método obsoleto - mantener por compatibilidad
-     */
-    public void iniciarTablaUsuarios() {
-        cargarUsuarios();
+    private void agregarEstacion() {
+        
     }
     
     // ========== MÉTODOS PARA GESTIÓN DE CIUDADES ==========
@@ -697,17 +728,6 @@ public class MenuAdmin extends javax.swing.JFrame {
 
         eliminarUsuarioButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         eliminarUsuarioButton.setText("Eliminar");
-        eliminarUsuarioButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                eliminarUsuarioButtonActionPerformed(evt);
-            }
-        });
-
-        usuariosTable.getSelectionModel().addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                usuariosTableValueChanged(evt);
-            }
-        });
 
         javax.swing.GroupLayout usuariosPanelLayout = new javax.swing.GroupLayout(usuariosPanel);
         usuariosPanel.setLayout(usuariosPanelLayout);
@@ -749,7 +769,6 @@ public class MenuAdmin extends javax.swing.JFrame {
 
         combustibleLabel.setText("Combustible:");
 
-        combustiblesBGroup.add(regularRButton);
         regularRButton.setText("Regular");
         regularRButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -757,13 +776,10 @@ public class MenuAdmin extends javax.swing.JFrame {
             }
         });
 
-        combustiblesBGroup.add(plusRButton);
         plusRButton.setText("Plus");
 
-        combustiblesBGroup.add(dieselRButton);
         dieselRButton.setText("Diesel");
 
-        combustiblesBGroup.add(gasLPRButton);
         gasLPRButton.setText("Gas LP");
 
         tiposCargadorLabel.setText("Tipos de cargador:");
@@ -872,11 +888,6 @@ public class MenuAdmin extends javax.swing.JFrame {
         });
 
         jButton2.setText("Eliminar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -934,11 +945,6 @@ public class MenuAdmin extends javax.swing.JFrame {
         });
 
         jButton6.setText("Listar Conexiones");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
-            }
-        });
 
         jButton7.setBackground(new java.awt.Color(102, 102, 255));
         jButton7.setText("Mostrar Mapa");
