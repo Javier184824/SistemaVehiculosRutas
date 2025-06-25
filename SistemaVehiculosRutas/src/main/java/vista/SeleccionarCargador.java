@@ -35,7 +35,6 @@ public class SeleccionarCargador extends javax.swing.JFrame {
         cargadoresScrollPane = new javax.swing.JScrollPane();
         cargadoresTable = new javax.swing.JTable();
         listoButton = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -60,8 +59,6 @@ public class SeleccionarCargador extends javax.swing.JFrame {
                 listoButtonActionPerformed(evt);
             }
         });
-
-        jButton1.setText("Listo");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -103,7 +100,6 @@ public class SeleccionarCargador extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane cargadoresScrollPane;
     private javax.swing.JTable cargadoresTable;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton listoButton;
     // End of variables declaration//GEN-END:variables
 }

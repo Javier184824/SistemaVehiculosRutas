@@ -35,8 +35,7 @@ public class EditarCargador extends javax.swing.JFrame {
         try {
             StationManagementService servicioManejoEstaciones = context.getAdminService().getStationManager();
             List<ChargerType> cargadores = servicioManejoEstaciones.getAllChargerTypes();
-            
-            DefaultTableModel tablaContenido = (DefaultTableModel) estacionesTable.getModel();
+            DefaultTableModel tablaContenido = (DefaultTableModel) cargadoresTable.getModel();
             tablaContenido.setRowCount(0); // Limpiar tabla
             
             for (ChargerType cargador : cargadores) {
@@ -60,12 +59,18 @@ public class EditarCargador extends javax.swing.JFrame {
      * Actualiza el estado del botón eliminar según si hay cargadores seleccionados
      */
     private void actualizarEstadoBotonEliminar() {
-        int filaSeleccionada = estacionesTable.getSelectedRow();
+        int filaSeleccionada = cargadoresTable.getSelectedRow();
         eliminarButton.setEnabled(filaSeleccionada >= 0);
     }
     
-    private void eliminarUsuarioSeleccionado() {
-        
+    private void eliminarCargadorSeleccionado() {
+        StationManagementService servicioManejoEstaciones = context.getAdminService().getStationManager();
+        List<ChargerType> cargadores = servicioManejoEstaciones.getAllChargerTypes();
+        DefaultTableModel tablaContenido = (DefaultTableModel) cargadoresTable.getModel();
+        for (ChargerType c : cargadores) {
+            tablaContenido.addRow(new Object[] {c.getName()});
+        }
+        cargadoresTable.setModel(tablaContenido);
     }
 
     /**
@@ -77,15 +82,15 @@ public class EditarCargador extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        estacionesScrollPane = new javax.swing.JScrollPane();
-        estacionesTable = new javax.swing.JTable();
+        cargadoresScrollPane = new javax.swing.JScrollPane();
+        cargadoresTable = new javax.swing.JTable();
         agregarButton = new javax.swing.JButton();
         eliminarButton = new javax.swing.JButton();
         listoButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        estacionesTable.setModel(new javax.swing.table.DefaultTableModel(
+        cargadoresTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null},
                 {null},
@@ -93,10 +98,10 @@ public class EditarCargador extends javax.swing.JFrame {
                 {null}
             },
             new String [] {
-                "Estaciones"
+                "Cargadores"
             }
         ));
-        estacionesScrollPane.setViewportView(estacionesTable);
+        cargadoresScrollPane.setViewportView(cargadoresTable);
 
         agregarButton.setText("Agregar");
 
@@ -110,7 +115,7 @@ public class EditarCargador extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(estacionesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cargadoresScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(agregarButton)
@@ -131,7 +136,7 @@ public class EditarCargador extends javax.swing.JFrame {
                         .addComponent(listoButton))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(23, 23, 23)
-                        .addComponent(estacionesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cargadoresScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(50, Short.MAX_VALUE))
         );
 
@@ -142,9 +147,9 @@ public class EditarCargador extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton agregarButton;
+    private javax.swing.JScrollPane cargadoresScrollPane;
+    private javax.swing.JTable cargadoresTable;
     private javax.swing.JButton eliminarButton;
-    private javax.swing.JScrollPane estacionesScrollPane;
-    private javax.swing.JTable estacionesTable;
     private javax.swing.JButton listoButton;
     // End of variables declaration//GEN-END:variables
 }
